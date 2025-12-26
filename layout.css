@@ -14,149 +14,237 @@
     box-shadow: var(--shadow-sm);
 }
 
-.header-main {
+.header {
+    position: sticky;
+    top: 0;
+    z-index: var(--z-sticky);
+    background-color: var(--color-white);
+    box-shadow: var(--shadow-sm);
+}
+
+.header-top {
+    border-bottom: 1px solid var(--color-gray-100);
+}
+
+.header-main-row {
     display: flex;
     align-items: center;
+    justify-content: space-between;
     gap: var(--space-6);
     padding: var(--space-4) 0;
 }
 
+/* Logo */
 .header-logo {
     flex-shrink: 0;
 }
 
+.logo-link {
+    display: flex;
+    align-items: center;
+    gap: var(--space-3);
+    text-decoration: none;
+}
+
 .logo-img {
-    height: 48px;
+    height: 56px;
     width: auto;
 }
 
-.logo-text {
-    font-size: 24px;
-    font-weight: var(--font-weight-bold);
-    color: var(--color-primary);
+.logo-text-wrapper {
+    display: flex;
+    flex-direction: column;
 }
 
-.header-nav {
-    display: none;
-    gap: var(--space-6);
+.logo-brand {
+    font-size: 28px;
+    font-weight: 800;
+    /* Extra bold */
+    color: #0f4c81;
+    /* Deep Blue from logo */
+    line-height: 1.1;
+    text-transform: uppercase;
 }
 
-.nav-link {
-    position: relative;
-    padding: var(--space-2) 0;
-    color: var(--color-gray-700);
-    font-weight: var(--font-weight-medium);
-    text-decoration: none;
-    transition: color var(--transition-fast);
+.logo-slogan {
+    font-size: 13px;
+    font-weight: 600;
+    color: #22c55e;
+    /* Green */
+    line-height: 1.1;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
 }
 
-.nav-link:hover,
-.nav-link.active {
-    color: var(--color-primary);
-    text-decoration: none;
-}
-
-.nav-link.active::after {
-    content: '';
-    position: absolute;
-    bottom: 0;
-    left: 0;
-    right: 0;
-    height: 2px;
-    background-color: var(--color-primary);
-}
-
-.nav-dropdown {
-    position: relative;
-}
-
-.nav-dropdown-menu {
-    position: absolute;
-    top: 100%;
-    left: 0;
-    min-width: 800px;
-    background-color: var(--color-white);
-    box-shadow: var(--shadow-lg);
-    border-radius: var(--radius-lg);
-    padding: var(--space-6);
-    display: none;
-    z-index: var(--z-dropdown);
-    margin-top: var(--space-2);
-}
-
-.nav-dropdown:hover .nav-dropdown-menu {
-    display: block;
-}
-
+/* Search Bar */
 .header-search {
     flex: 1;
-    max-width: 400px;
+    max-width: 600px;
+    margin: 0 var(--space-8);
 }
 
 .search-form {
-    position: relative;
     display: flex;
     align-items: center;
+    background-color: #f8f9fa;
+    border: 1px solid #e5e7eb;
+    border-radius: 9999px;
+    /* Full pill shape */
+    overflow: hidden;
+    height: 44px;
 }
 
 .search-input {
-    width: 100%;
-    padding: var(--space-3) var(--space-12) var(--space-3) var(--space-4);
-    border: 1px solid var(--color-gray-300);
-    border-radius: var(--radius-full);
+    flex: 1;
+    padding: 0 var(--space-4);
+    border: none;
+    background: transparent;
     font-size: var(--font-size-sm);
-    transition: all var(--transition-fast);
+    color: var(--color-gray-700);
+    height: 100%;
 }
 
 .search-input:focus {
     outline: none;
-    border-color: var(--color-primary);
-    box-shadow: 0 0 0 3px rgba(34, 197, 94, 0.1);
 }
 
-.search-btn {
-    position: absolute;
-    right: var(--space-2);
-    padding: var(--space-2);
-    background: none;
-    border: none;
-    color: var(--color-gray-500);
-    cursor: pointer;
-    border-radius: var(--radius-md);
-    transition: all var(--transition-fast);
-}
-
-.search-btn:hover {
-    color: var(--color-primary);
-    background-color: var(--color-gray-100);
-}
-
-.header-actions {
+.search-btn-custom {
     display: flex;
     align-items: center;
     gap: var(--space-2);
+    background-color: #16a34a;
+    /* Green */
+    color: white;
+    border: none;
+    padding: 0 var(--space-6);
+    height: 100%;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background-color 0.2s;
+    border-top-right-radius: 9999px;
+    border-bottom-right-radius: 9999px;
 }
 
-.cart-btn {
+.search-btn-custom:hover {
+    background-color: #15803d;
+}
+
+/* Header Actions */
+.header-actions {
+    display: flex;
+    align-items: center;
+    gap: var(--space-6);
+}
+
+.action-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-decoration: none;
+    color: var(--color-gray-600);
+    gap: 4px;
+}
+
+.action-item:hover {
+    color: #0f4c81;
+}
+
+.action-icon {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.action-text {
+    font-size: 11px;
+    font-weight: 700;
+    text-transform: uppercase;
+    color: inherit;
+}
+
+.cart-btn-wrapper {
     position: relative;
 }
 
 .cart-badge {
     position: absolute;
-    top: -4px;
-    right: -4px;
-    min-width: 20px;
-    height: 20px;
-    display: none;
+    top: -5px;
+    right: -8px;
+    background-color: var(--color-error);
+    color: white;
+    font-size: 10px;
+    font-weight: bold;
+    min-width: 16px;
+    height: 16px;
+    border-radius: 50%;
+    display: flex;
     align-items: center;
     justify-content: center;
-    background-color: var(--color-error);
-    color: var(--color-white);
-    border-radius: var(--radius-full);
-    font-size: var(--font-size-xs);
-    font-weight: var(--font-weight-semibold);
-    padding: 0 var(--space-1);
 }
+
+/* Main Navigation Bar */
+.header-nav-bar {
+    background-color: #0f4c81;
+    /* Deep Blue */
+    color: white;
+}
+
+.main-nav {
+    display: flex;
+    align-items: center;
+}
+
+.main-nav-link {
+    display: inline-block;
+    padding: var(--space-3) var(--space-6);
+    color: white;
+    font-weight: 700;
+    text-transform: uppercase;
+    /* Ensure uppercase */
+    text-decoration: none;
+    font-size: 14px;
+    transition: background-color 0.2s;
+    border-left: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.main-nav-link:last-child {
+    border-right: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.main-nav-link:hover,
+.main-nav-link.active {
+    background-color: rgba(255, 255, 255, 0.1);
+    color: white;
+    text-decoration: none;
+}
+
+/* Mobile Adjustments */
+@media (max-width: 991px) {
+    .header-nav-bar {
+        display: none;
+        /* Hide desktop nav on mobile */
+    }
+
+    .mobile-menu-btn {
+        display: block;
+    }
+
+    .header-search {
+        /* Hide search on small screens if needed or adjust */
+        display: none;
+    }
+
+    .header-logo .logo-brand {
+        font-size: 20px;
+    }
+
+    .header-logo .logo-slogan {
+        font-size: 10px;
+    }
+}
+
+/* Mobile Menu */
 
 /* Mobile Menu */
 .mobile-menu {
