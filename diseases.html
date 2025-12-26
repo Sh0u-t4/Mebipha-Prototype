@@ -2,134 +2,215 @@
 <html lang="vi">
 
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Tra cứu bệnh - Mebipha</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Tra cứu bệnh - Mebipha</title>
 
-    <link rel="stylesheet" href="styles.css">
-    <link rel="stylesheet" href="components.css">
-    <link rel="stylesheet" href="layout.css">
+  <link rel="stylesheet" href="styles.css">
+  <link rel="stylesheet" href="components.css">
+  <link rel="stylesheet" href="layout.css">
 </head>
 
 <body>
-    <!-- Header -->
-    <header class="header" id="header">
-        <div class="container">
-            <div class="header-main">
-                <div class="header-logo">
-                    <a href="index.html">
-                        <span class="logo-text"
-                            style="font-size: 24px; font-weight: bold; color: var(--color-primary);">MEBIPHA</span>
-                    </a>
-                </div>
-                <nav class="header-nav md:d-flex">
-                    <a href="index.html" class="nav-link">Trang chủ</a>
-                    <a href="products.html" class="nav-link">Sản phẩm</a>
-                    <a href="news.html" class="nav-link">Tin tức</a>
-                    <a href="diseases.html" class="nav-link active">Tra cứu bệnh</a>
-                    <a href="contact.html" class="nav-link">Liên hệ</a>
-                </nav>
-                <div class="header-actions">
-                    <button class="btn-icon cart-btn" onclick="window.location.href='cart.html'">
-                        🛒
-                        <span class="cart-badge">0</span>
-                    </button>
-                </div>
-            </div>
-        </div>
-    </header>
+  <!-- Header -->
+  <header class="header" id="header">
+    <div class="header-top">
+      <div class="container">
+        <div class="header-main-row">
+          <!-- Logo -->
+          <div class="header-logo">
+            <a href="index.html" class="logo-link">
+              <img src="images/logo.png" alt="Mebipha Logo" class="logo-img"
+                onerror="this.style.display='none'; this.nextElementSibling.style.display='block';">
+              <div class="logo-text-wrapper">
+                <span class="logo-brand">MEBIPHA</span>
+                <span class="logo-slogan">GIẢI PHÁP CHĂN NUÔI 4.0</span>
+              </div>
+            </a>
+          </div>
 
-    <!-- Page Header -->
-    <div class="bg-primary text-white py-12">
-        <div class="container text-center">
-            <h1 class="text-4xl font-bold mb-4">Tra cứu bệnh</h1>
-            <p class="text-xl" style="opacity: 0.95;">Tìm hiểu triệu chứng, phòng ngừa và điều trị các bệnh phổ biến</p>
+          <!-- Search Bar -->
+          <div class="header-search">
+            <form class="search-form" onsubmit="handleSearch(event)">
+              <input type="search" class="search-input" placeholder="Tìm thuốc, hoạt chất, hoặc bệnh lý..."
+                id="searchInput">
+              <button type="submit" class="search-btn-custom">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <circle cx="11" cy="11" r="8"></circle>
+                  <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+                </svg>
+                Tìm kiếm
+              </button>
+            </form>
+          </div>
+
+          <!-- Header Actions -->
+          <div class="header-actions">
+            <a href="#" class="action-item">
+              <div class="action-icon">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                  <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
+                  <polyline points="14 2 14 8 20 8"></polyline>
+                  <line x1="16" y1="13" x2="8" y2="13"></line>
+                  <line x1="16" y1="17" x2="8" y2="17"></line>
+                  <polyline points="10 9 9 9 8 9"></polyline>
+                </svg>
+              </div>
+              <span class="action-text">KÊ ĐƠN ONLINE</span>
+            </a>
+            <a href="cart.html" class="action-item cart-btn-wrapper">
+              <div class="action-icon">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                  <circle cx="9" cy="21" r="1"></circle>
+                  <circle cx="20" cy="21" r="1"></circle>
+                  <path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"></path>
+                </svg>
+                <span class="cart-badge">0</span>
+              </div>
+              <span class="action-text">GIỎ HÀNG</span>
+            </a>
+
+            <!-- Mobile Menu Button -->
+            <button class="btn-icon mobile-menu-btn md:d-none" onclick="toggleMobileMenu()">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <line x1="3" y1="6" x2="21" y2="6" />
+                <line x1="3" y1="12" x2="21" y2="12" />
+                <line x1="3" y1="18" x2="21" y2="18" />
+              </svg>
+            </button>
+          </div>
         </div>
+      </div>
     </div>
 
-    <!-- Tabs -->
-    <div class="container mt-8">
-        <div class="tabs">
-            <div class="tab-list bg-white rounded-lg shadow-sm p-2">
-                <button class="tab-link active" onclick="switchCategory('gia-cam')">
-                    🐔 Gia Cầm
-                </button>
-                <button class="tab-link" onclick="switchCategory('gia-suc')">
-                    🐷 Gia Súc
-                </button>
-                <button class="tab-link" onclick="switchCategory('tom')">
-                    🦐 Tôm
-                </button>
-                <button class="tab-link" onclick="switchCategory('ca')">
-                    🐟 Cá
-                </button>
-            </div>
-        </div>
+    <!-- Navigation Bar -->
+    <div class="header-nav-bar">
+      <div class="container">
+        <nav class="main-nav">
+          <a href="index.html" class="main-nav-link">TRANG CHỦ</a>
+          <a href="products.html" class="main-nav-link">CỬA HÀNG</a>
+          <a href="diseases.html" class="main-nav-link active">TRA CỨU BỆNH</a>
+          <a href="news.html" class="main-nav-link">TIN TỨC</a>
+          <a href="contact.html" class="main-nav-link">LIÊN HỆ</a>
+        </nav>
+      </div>
     </div>
+  </header>
 
-    <!-- Disease Grid -->
-    <div class="container mt-8 mb-12">
-        <div class="news-grid" id="diseaseGrid">
-            <!-- Diseases will be loaded here -->
-        </div>
+  <!-- Mobile Menu -->
+  <div class="mobile-menu" id="mobileMenu">
+    <div class="mobile-menu-content">
+      <div class="mobile-menu-header">
+        <span class="font-bold">Menu</span>
+        <button class="btn-icon" onclick="toggleMobileMenu()">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <line x1="18" y1="6" x2="6" y2="18" />
+            <line x1="6" y1="6" x2="18" y2="18" />
+          </svg>
+        </button>
+      </div>
+      <nav class="mobile-nav">
+        <a href="index.html" class="mobile-nav-link">TRANG CHỦ</a>
+        <a href="products.html" class="mobile-nav-link">CỬA HÀNG</a>
+        <a href="diseases.html" class="mobile-nav-link">TRA CỨU BỆNH</a>
+        <a href="news.html" class="mobile-nav-link">TIN TỨC</a>
+        <a href="contact.html" class="mobile-nav-link">LIÊN HỆ</a>
+        <a href="account.html" class="mobile-nav-link">TÀI KHOẢN</a>
+      </nav>
     </div>
+  </div>
 
-    <!-- Footer -->
-    <footer class="footer">
-        <div class="container">
-            <div class="footer-bottom">
-                <p>&copy; 2024 Mebipha. Tất cả các quyền được bảo lưu.</p>
-            </div>
-        </div>
-    </footer>
-
-    <!-- Disease Detail Modal -->
-    <div class="modal" id="diseaseModal">
-        <div class="modal-backdrop" onclick="Modal.hide('diseaseModal')"></div>
-        <div class="modal-content" style="max-width: 900px; max-height: 90vh; overflow-y: auto;">
-            <div class="modal-header">
-                <h3 class="modal-title" id="diseaseTitle">Chi tiết bệnh</h3>
-                <button class="modal-close" onclick="Modal.hide('diseaseModal')">✕</button>
-            </div>
-            <div class="modal-body" id="diseaseContent">
-                <!-- Disease details will be loaded here -->
-            </div>
-        </div>
+  <!-- Page Header -->
+  <div class="bg-primary text-white py-12">
+    <div class="container text-center">
+      <h1 class="text-4xl font-bold mb-4">Tra cứu bệnh</h1>
+      <p class="text-xl" style="opacity: 0.95;">Tìm hiểu triệu chứng, phòng ngừa và điều trị các bệnh phổ biến</p>
     </div>
+  </div>
 
-    <!-- Scripts -->
-    <script src="utils.js"></script>
-    <script src="data/products.js"></script>
-    <script src="data/diseases.js"></script>
-    <script src="main.js"></script>
+  <!-- Tabs -->
+  <div class="container mt-8">
+    <div class="tabs">
+      <div class="tab-list bg-white rounded-lg shadow-sm p-2">
+        <button class="tab-link active" onclick="switchCategory('gia-cam')">
+          🐔 Gia Cầm
+        </button>
+        <button class="tab-link" onclick="switchCategory('gia-suc')">
+          🐷 Gia Súc
+        </button>
+        <button class="tab-link" onclick="switchCategory('tom')">
+          🦐 Tôm
+        </button>
+        <button class="tab-link" onclick="switchCategory('ca')">
+          🐟 Cá
+        </button>
+      </div>
+    </div>
+  </div>
 
-    <script>
-        let currentCategory = 'gia-cam';
+  <!-- Disease Grid -->
+  <div class="container mt-8 mb-12">
+    <div class="news-grid" id="diseaseGrid">
+      <!-- Diseases will be loaded here -->
+    </div>
+  </div>
 
-        function switchCategory(category) {
-            currentCategory = category;
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="container">
+      <div class="footer-bottom">
+        <p>&copy; 2024 Mebipha. Tất cả các quyền được bảo lưu.</p>
+      </div>
+    </div>
+  </footer>
 
-            // Update active tab
-            document.querySelectorAll('.tab-link').forEach(tab => tab.classList.remove('active'));
-            event.target.classList.add('active');
+  <!-- Disease Detail Modal -->
+  <div class="modal" id="diseaseModal">
+    <div class="modal-backdrop" onclick="Modal.hide('diseaseModal')"></div>
+    <div class="modal-content" style="max-width: 900px; max-height: 90vh; overflow-y: auto;">
+      <div class="modal-header">
+        <h3 class="modal-title" id="diseaseTitle">Chi tiết bệnh</h3>
+        <button class="modal-close" onclick="Modal.hide('diseaseModal')">✕</button>
+      </div>
+      <div class="modal-body" id="diseaseContent">
+        <!-- Disease details will be loaded here -->
+      </div>
+    </div>
+  </div>
 
-            renderDiseases();
-        }
+  <!-- Scripts -->
+  <script src="utils.js"></script>
+  <script src="data/products.js"></script>
+  <script src="data/diseases.js"></script>
+  <script src="main.js"></script>
 
-        function renderDiseases() {
-            const diseases = filterDiseases({ category: currentCategory });
-            const diseaseGrid = document.getElementById('diseaseGrid');
+  <script>
+    let currentCategory = 'gia-cam';
 
-            if (diseases.length === 0) {
-                diseaseGrid.innerHTML = `
+    function switchCategory(category) {
+      currentCategory = category;
+
+      // Update active tab
+      document.querySelectorAll('.tab-link').forEach(tab => tab.classList.remove('active'));
+      event.target.classList.add('active');
+
+      renderDiseases();
+    }
+
+    function renderDiseases() {
+      const diseases = filterDiseases({ category: currentCategory });
+      const diseaseGrid = document.getElementById('diseaseGrid');
+
+      if (diseases.length === 0) {
+        diseaseGrid.innerHTML = `
           <div class="text-center p-8" style="grid-column: 1 / -1;">
             <p class="text-lg text-gray-600">Không có dữ liệu bệnh cho danh mục này</p>
           </div>
         `;
-                return;
-            }
+        return;
+      }
 
-            diseaseGrid.innerHTML = diseases.map(disease => `
+      diseaseGrid.innerHTML = diseases.map(disease => `
         <div class="card cursor-pointer" onclick="showDiseaseDetail('${disease.id}')">
           <img class="card-img" src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='400' height='200'%3E%3Crect fill='%233B82F6' width='400' height='200'/%3E%3Ctext x='50%25' y='50%25' dominant-baseline='middle' text-anchor='middle' fill='white' font-size='20'%3E${encodeURIComponent(disease.name)}%3C/text%3E%3C/svg%3E" alt="${disease.name}" style="height: 200px; object-fit: cover;">
           <div class="card-body">
@@ -142,19 +223,19 @@
           </div>
         </div>
       `).join('');
-        }
+    }
 
-        function showDiseaseDetail(diseaseId) {
-            const disease = getDiseaseById(diseaseId);
-            if (!disease) return;
+    function showDiseaseDetail(diseaseId) {
+      const disease = getDiseaseById(diseaseId);
+      if (!disease) return;
 
-            document.getElementById('diseaseTitle').textContent = disease.name;
+      document.getElementById('diseaseTitle').textContent = disease.name;
 
-            const relatedProducts = disease.relatedProducts
-                .map(id => getProductById(id))
-                .filter(p => p);
+      const relatedProducts = disease.relatedProducts
+        .map(id => getProductById(id))
+        .filter(p => p);
 
-            document.getElementById('diseaseContent').innerHTML = `
+      document.getElementById('diseaseContent').innerHTML = `
         <div class="d-flex flex-column gap-6">
           <div>
             <h4 class="text-lg font-semibold mb-3">Tổng quan</h4>
@@ -218,20 +299,20 @@
         </div>
       `;
 
-            Modal.show('diseaseModal');
-        }
+      Modal.show('diseaseModal');
+    }
 
-        // Initialize
-        document.addEventListener('DOMContentLoaded', () => {
-            renderDiseases();
-        });
-    </script>
+    // Initialize
+    document.addEventListener('DOMContentLoaded', () => {
+      renderDiseases();
+    });
+  </script>
 
-    <style>
-        .list-disc {
-            list-style-type: disc;
-        }
-    </style>
+  <style>
+    .list-disc {
+      list-style-type: disc;
+    }
+  </style>
 </body>
 
 </html>
