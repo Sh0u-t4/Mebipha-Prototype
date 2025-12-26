@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html lang="vi">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tra cứu bệnh - Mebipha</title>
+
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="components.css">
+    <link rel="stylesheet" href="layout.css">
+</head>
+
+<body>
+    <!-- Header -->
+    <header class="header" id="header">
+        <div class="container">
+            <div class="header-main">
+                <div class="header-logo">
+                    <a href="index.html">
+                        <span class="logo-text"
+                            style="font-size: 24px; font-weight: bold; color: var(--color-primary);">MEBIPHA</span>
+                    </a>
+                </div>
+                <nav class="header-nav md:d-flex">
+                    <a href="index.html" class="nav-link">Trang chủ</a>
+                    <a href="products.html" class="nav-link">Sản phẩm</a>
+                    <a href="news.html" class="nav-link">Tin tức</a>
+                    <a href="diseases.html" class="nav-link active">Tra cứu bệnh</a>
+                    <a href="contact.html" class="nav-link">Liên hệ</a>
+                </nav>
+                <div class="header-actions">
+                    <button class="btn-icon cart-btn" onclick="window.location.href='cart.html'">
+                        🛒
+                        <span class="cart-badge">0</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Page Header -->
+    <div class="bg-primary text-white py-12">
+        <div class="container text-center">
+            <h1 class="text-4xl font-bold mb-4">Tra cứu bệnh</h1>
+            <p class="text-xl" style="opacity: 0.95;">Tìm hiểu triệu chứng, phòng ngừa và điều trị các bệnh phổ biến</p>
+        </div>
+    </div>
+
+    <!-- Tabs -->
+    <div class="container mt-8">
+        <div class="tabs">
+            <div class="tab-list bg-white rounded-lg shadow-sm p-2">
+                <button class="tab-link active" onclick="switchCategory('gia-cam')">
+                    🐔 Gia Cầm
+                </button>
+                <button class="tab-link" onclick="switchCategory('gia-suc')">
+                    🐷 Gia Súc
+                </button>
+                <button class="tab-link" onclick="switchCategory('tom')">
+                    🦐 Tôm
+                </button>
+                <button class="tab-link" onclick="switchCategory('ca')">
+                    🐟 Cá
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Disease Grid -->
+    <div class="container mt-8 mb-12">
+        <div class="news-grid" id="diseaseGrid">
+            <!-- Diseases will be loaded here -->
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-bottom">
+                <p>&copy; 2024 Mebipha. Tất cả các quyền được bảo lưu.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Disease Detail Modal -->
+    <div class="modal" id="diseaseModal">
+        <div class="modal-backdrop" onclick="Modal.hide('diseaseModal')"></div>
+        <div class="modal-content" style="max-width: 900px; max-height: 90vh; overflow-y: auto;">
+            <div class="modal-header">
+                <h3 class="modal-title" id="diseaseTitle">Chi tiết bệnh</h3>
+                <button class="modal-close" onclick="Modal.hide('diseaseModal')">✕</button>
+            </div>
+            <div class="modal-body" id="diseaseContent">
+                <!-- Disease details will be loaded here -->
+            </div>
+        </div>
+    </div>
+
+    <!-- Scripts -->
+    <script src="utils.js"></script>
+    <script src="data/products.js"></script>
+    <script src="data/diseases.js"></script>
+    <script src="main.js"></script>
+
+    <script>
+        let currentCategory = 'gia-cam';
+
+        function switchCategory(category) {
+            currentCategory = category;
+
+            // Update active tab
+            document.querySelectorAll('.tab-link').forEach(tab => tab.classList.remove('active'));
+            event.target.classList.add('active');
+
+            renderDiseases();
+        }
+
+        function renderDiseases() {
+            const diseases = filterDiseases({ category: currentCategory });
+            const diseaseGrid = document.getElementById('diseaseGrid');
+
+            if (diseases.length === 0) {
+                diseaseGrid.innerHTML = `
+          <div class="text-center p-8" style="grid-column: 1 / -1;">
+            <p class="text-lg text-gray-600">Không có dữ liệu bệnh cho danh mục này</p>
+          </div>
+        `;
+                return;
+            }
+
+            diseaseGrid.innerHTML = diseases.map(disease => `
+        <div class="card cursor-pointer" onclick="showDiseaseDetail('${disease.id}')">
+          <img class="card-img" src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='400' height='200'%3E%3Crect fill='%233B82F6' width='400' height='200'/%3E%3Ctext x='50%25' y='50%25' dominant-baseline='middle' text-anchor='middle' fill='white' font-size='20'%3E${encodeURIComponent(disease.name)}%3C/text%3E%3C/svg%3E" alt="${disease.name}" style="height: 200px; object-fit: cover;">
+          <div class="card-body">
+            <div class="d-flex justify-between align-center mb-2">
+              <span class="badge badge-secondary">${disease.animalType}</span>
+            </div>
+            <h3 class="card-title">${disease.name}</h3>
+            <p class="card-text">${disease.overview.description}</p>
+            <button class="btn btn-outline mt-2">Xem chi tiết →</button>
+          </div>
+        </div>
+      `).join('');
+        }
+
+        function showDiseaseDetail(diseaseId) {
+            const disease = getDiseaseById(diseaseId);
+            if (!disease) return;
+
+            document.getElementById('diseaseTitle').textContent = disease.name;
+
+            const relatedProducts = disease.relatedProducts
+                .map(id => getProductById(id))
+                .filter(p => p);
+
+            document.getElementById('diseaseContent').innerHTML = `
+        <div class="d-flex flex-column gap-6">
+          <div>
+            <h4 class="text-lg font-semibold mb-3">Tổng quan</h4>
+            <p class="mb-3">${disease.overview.description}</p>
+            
+            <h5 class="font-semibold mb-2">Triệu chứng:</h5>
+            <ul class="list-disc pl-6 mb-3">
+              ${disease.overview.symptoms.map(s => `<li>${s}</li>`).join('')}
+            </ul>
+            
+            <h5 class="font-semibold mb-2">Nguyên nhân:</h5>
+            <ul class="list-disc pl-6 mb-3">
+              ${disease.overview.causes.map(c => `<li>${c}</li>`).join('')}
+            </ul>
+            
+            <h5 class="font-semibold mb-2">Đối tượng nguy cơ:</h5>
+            <ul class="list-disc pl-6">
+              ${disease.overview.riskFactors.map(r => `<li>${r}</li>`).join('')}
+            </ul>
+          </div>
+          
+          <div class="border-t pt-6">
+            <h4 class="text-lg font-semibold mb-3">Chẩn đoán</h4>
+            <ul class="list-disc pl-6">
+              ${disease.diagnosis.map(d => `<li>${d}</li>`).join('')}
+            </ul>
+          </div>
+          
+          <div class="border-t pt-6">
+            <h4 class="text-lg font-semibold mb-3">Phòng ngừa</h4>
+            <ul class="list-disc pl-6">
+              ${disease.prevention.map(p => `<li>${p}</li>`).join('')}
+            </ul>
+          </div>
+          
+          <div class="border-t pt-6">
+            <h4 class="text-lg font-semibold mb-3">Điều trị</h4>
+            <ul class="list-disc pl-6">
+              ${disease.treatment.map(t => `<li>${t}</li>`).join('')}
+            </ul>
+          </div>
+          
+          ${relatedProducts.length > 0 ? `
+            <div class="border-t pt-6">
+              <h4 class="text-lg font-semibold mb-4">Sản phẩm gợi ý</h4>
+              <div class="d-grid grid-cols-2 gap-4">
+                ${relatedProducts.map(product => `
+                  <div class="card">
+                    <div class="card-body">
+                      <h5 class="font-semibold mb-2">${product.name}</h5>
+                      <p class="text-primary font-bold mb-3">${formatPrice(product.price)}</p>
+                      <button class="btn btn-primary btn-sm w-full" onclick="addToCart('${product.id}'); Modal.hide('diseaseModal');">
+                        Thêm vào giỏ
+                      </button>
+                    </div>
+                  </div>
+                `).join('')}
+              </div>
+            </div>
+          ` : ''}
+        </div>
+      `;
+
+            Modal.show('diseaseModal');
+        }
+
+        // Initialize
+        document.addEventListener('DOMContentLoaded', () => {
+            renderDiseases();
+        });
+    </script>
+
+    <style>
+        .list-disc {
+            list-style-type: disc;
+        }
+    </style>
+</body>
+
+</html>

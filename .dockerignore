@@ -1,0 +1,52 @@
+# Git files  
+.git  
+.gitignore  
+.gitattributes  
+  
+# Docker files  
+Dockerfile  
+docker-compose*.yml  
+.dockerignore  
+  
+# Documentation  
+README.md  
+*.md  
+LICENSE  
+CHANGELOG.md  
+  
+# Node modules (if any)  
+node_modules  
+npm-debug.log  
+yarn-error.log  
+package-lock.json  
+yarn.lock  
+  
+# IDE files  
+.vscode  
+.idea  
+*.swp  
+*.swo  
+*~  
+*.sublime*  
+.project  
+.settings  
+  
+# OS files  
+.DS_Store  
+Thumbs.db  
+desktop.ini  
+  
+# CI/CD  
+.github  
+.gitlab-ci.yml  
+.travis.yml  
+  
+# Testing  
+.editorconfig  
+.eslintrc*  
+.prettierrc*  
+jest.config.js  
+  
+# Logs  
+*.log  
+logs 

@@ -1,0 +1,448 @@
+<!DOCTYPE html>
+<html lang="vi">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description"
+        content="Mebipha - Chuyên cung cấp thuốc thú y, thủy sản và sản phẩm chăn nuôi chất lượng cao">
+    <title>Mebipha - Thuốc Thú Y & Thủy Sản Chất Lượng Cao</title>
+
+    <!-- Stylesheets -->
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="components.css">
+    <link rel="stylesheet" href="layout.css">
+
+    <!-- Favicon -->
+    <link rel="icon" type="image/png" href="images/favicon.png">
+</head>
+
+<body>
+    <!-- Header -->
+    <header class="header" id="header">
+        <div class="container">
+            <div class="header-main">
+                <!-- Logo -->
+                <div class="header-logo">
+                    <a href="index.html">
+                        <img src="images/logo.png" alt="Mebipha Logo" class="logo-img"
+                            onerror="this.style.display='none'; this.nextElementSibling.style.display='block';">
+                        <span class="logo-text"
+                            style="display: none; font-size: 24px; font-weight: bold; color: var(--color-primary);">MEBIPHA</span>
+                    </a>
+                </div>
+
+                <!-- Navigation -->
+                <nav class="header-nav md:d-flex">
+                    <a href="index.html" class="nav-link active">Trang chủ</a>
+                    <div class="nav-dropdown">
+                        <a href="products.html" class="nav-link">Sản phẩm</a>
+                        <div class="nav-dropdown-menu" id="megaMenu">
+                            <!-- Mega menu will be populated by JS -->
+                        </div>
+                    </div>
+                    <a href="news.html" class="nav-link">Tin tức</a>
+                    <a href="diseases.html" class="nav-link">Tra cứu bệnh</a>
+                    <a href="contact.html" class="nav-link">Liên hệ</a>
+                </nav>
+
+                <!-- Search Bar -->
+                <div class="header-search">
+                    <form class="search-form" onsubmit="handleSearch(event)">
+                        <input type="search" class="search-input" placeholder="Tìm kiếm sản phẩm..." id="searchInput">
+                        <button type="submit" class="search-btn">
+                            <svg width="20" height="20" viewBox="0 0 20 20" fill="none" stroke="currentColor"
+                                stroke-width="2">
+                                <circle cx="8" cy="8" r="6" />
+                                <path d="M13 13l4 4" />
+                            </svg>
+                        </button>
+                    </form>
+                </div>
+
+                <!-- Header Actions -->
+                <div class="header-actions">
+                    <button class="btn-icon" onclick="window.location.href='account.html'" title="Tài khoản">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                            stroke-width="2">
+                            <circle cx="12" cy="8" r="4" />
+                            <path d="M6 21v-2a4 4 0 0 1 4-4h4a4 4 0 0 1 4 4v2" />
+                        </svg>
+                    </button>
+                    <button class="btn-icon cart-btn" onclick="window.location.href='cart.html'" title="Giỏ hàng">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                            stroke-width="2">
+                            <circle cx="9" cy="21" r="1" />
+                            <circle cx="20" cy="21" r="1" />
+                            <path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6" />
+                        </svg>
+                        <span class="cart-badge">0</span>
+                    </button>
+                    <button class="btn-icon mobile-menu-btn md:d-none" onclick="toggleMobileMenu()">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                            stroke-width="2">
+                            <line x1="3" y1="6" x2="21" y2="6" />
+                            <line x1="3" y1="12" x2="21" y2="12" />
+                            <line x1="3" y1="18" x2="21" y2="18" />
+                        </svg>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Mobile Menu -->
+    <div class="mobile-menu" id="mobileMenu">
+        <div class="mobile-menu-content">
+            <div class="mobile-menu-header">
+                <span class="font-bold">Menu</span>
+                <button class="btn-icon" onclick="toggleMobileMenu()">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <line x1="18" y1="6" x2="6" y2="18" />
+                        <line x1="6" y1="6" x2="18" y2="18" />
+                    </svg>
+                </button>
+            </div>
+            <nav class="mobile-nav">
+                <a href="index.html" class="mobile-nav-link">Trang chủ</a>
+                <a href="products.html" class="mobile-nav-link">Sản phẩm</a>
+                <a href="news.html" class="mobile-nav-link">Tin tức</a>
+                <a href="diseases.html" class="mobile-nav-link">Tra cứu bệnh</a>
+                <a href="contact.html" class="mobile-nav-link">Liên hệ</a>
+                <a href="account.html" class="mobile-nav-link">Tài khoản</a>
+            </nav>
+        </div>
+    </div>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="hero-bg"></div>
+        <div class="container">
+            <div class="hero-content">
+                <h1 class="hero-title">Giải Pháp Chăn Nuôi & Thủy Sản Toàn Diện</h1>
+                <p class="hero-subtitle">Sản phẩm chất lượng cao - Giá cả hợp lý - Giao hàng toàn quốc</p>
+                <div class="hero-actions">
+                    <a href="products.html" class="btn btn-primary btn-lg">Khám phá sản phẩm</a>
+                    <a href="contact.html" class="btn btn-outline btn-lg">Liên hệ tư vấn</a>
+                </div>
+                <div class="hero-features">
+                    <div class="hero-feature">
+                        <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                            stroke-width="2">
+                            <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14" />
+                            <polyline points="22 4 12 14.01 9 11.01" />
+                        </svg>
+                        <span>Chính hãng 100%</span>
+                    </div>
+                    <div class="hero-feature">
+                        <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                            stroke-width="2">
+                            <rect x="1" y="3" width="15" height="13" />
+                            <polygon points="16 8 20 8 23 11 23 16 16 16 16 8" />
+                            <circle cx="5.5" cy="18.5" r="2.5" />
+                            <circle cx="18.5" cy="18.5" r="2.5" />
+                        </svg>
+                        <span>Giao hàng nhanh</span>
+                    </div>
+                    <div class="hero-feature">
+                        <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                            stroke-width="2">
+                            <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z" />
+                        </svg>
+                        <span>Hỗ trợ 24/7</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Category Section -->
+    <section class="section">
+        <div class="container">
+            <h2 class="section-title text-center">Danh mục sản phẩm</h2>
+            <div class="category-grid">
+                <a href="products.html?category=thuoc-thu-y" class="category-card">
+                    <div class="category-icon">
+                        <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                            stroke-width="2">
+                            <path d="M9 2v6m6-6v6m-9 1h12M5 12h14m-7 8v-8" />
+                        </svg>
+                    </div>
+                    <h3 class="category-title">Thuốc Thú Y</h3>
+                    <p class="category-desc">Tiêm, uống, bột cho gia súc & gia cầm</p>
+                </a>
+                <a href="products.html?category=thuoc-tom" class="category-card">
+                    <div class="category-icon">
+                        <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                            stroke-width="2">
+                            <path d="M12 2C6.5 2 2 6.5 2 12s4.5 10 10 10 10-4.5 10-10S17.5 2 12 2z" />
+                        </svg>
+                    </div>
+                    <h3 class="category-title">Thuốc Tôm</h3>
+                    <p class="category-desc">Vi sinh, khoáng, dinh dưỡng cho tôm</p>
+                </a>
+                <a href="products.html?category=thuoc-ca" class="category-card">
+                    <div class="category-icon">
+                        <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                            stroke-width="2">
+                            <path d="M12 5c-7 0-10 7-10 7s3 7 10 7 10-7 10-7-3-7-10-7z" />
+                            <circle cx="12" cy="12" r="3" />
+                        </svg>
+                    </div>
+                    <h3 class="category-title">Thuốc Cá</h3>
+                    <p class="category-desc">Điều trị, dinh dưỡng cho cá nuôi</p>
+                </a>
+                <a href="products.html" class="category-card">
+                    <div class="category-icon">
+                        <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                            stroke-width="2">
+                            <rect x="3" y="3" width="18" height="18" rx="2" />
+                            <line x1="9" y1="9" x2="15" y2="15" />
+                            <line x1="15" y1="9" x2="9" y2="15" />
+                        </svg>
+                    </div>
+                    <h3 class="category-title">Xem tất cả</h3>
+                    <p class="category-desc">Khám phá toàn bộ sản phẩm</p>
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Featured Products -->
+    <section class="section bg-white">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title">Sản phẩm nổi bật</h2>
+                <a href="products.html" class="btn btn-outline">Xem tất cả</a>
+            </div>
+            <div class="product-grid" id="featuredProducts">
+                <!-- Products will be loaded by JavaScript -->
+                <div class="skeleton" style="height: 400px;"></div>
+                <div class="skeleton" style="height: 400px;"></div>
+                <div class="skeleton" style="height: 400px;"></div>
+                <div class="skeleton" style="height: 400px;"></div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Featured News -->
+    <section class="section">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title">Tin tức mới nhất</h2>
+                <a href="news.html" class="btn btn-outline">Xem tất cả</a>
+            </div>
+            <div class="news-grid" id="featuredNews">
+                <!-- News will be loaded by JavaScript -->
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section class="cta-section">
+        <div class="container">
+            <div class="cta-content">
+                <h2 class="cta-title">Cần tư vấn về sản phẩm?</h2>
+                <p class="cta-text">Đội ngũ chuyên gia của chúng tôi sẵn sàng hỗ trợ bạn 24/7</p>
+                <div class="cta-actions">
+                    <a href="tel:1900xxxx" class="btn btn-primary btn-lg">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                            stroke-width="2">
+                            <path
+                                d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z" />
+                        </svg>
+                        Gọi ngay: 1900 xxxx
+                    </a>
+                    <a href="contact.html" class="btn btn-secondary btn-lg">Gửi yêu cầu</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-main">
+                <div class="footer-column">
+                    <h3 class="footer-title">Về Mebipha</h3>
+                    <p class="footer-text">Chuyên cung cấp thuốc thú y, thủysản và các sản phẩm chăn nuôi chất lượng cao
+                        với giá cả hợp lý.</p>
+                    <div class="footer-social">
+                        <a href="#" class="social-link" title="Facebook">
+                            <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
+                                <path
+                                    d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z" />
+                            </svg>
+                        </a>
+                        <a href="#" class="social-link" title="Zalo">
+                            <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
+                                <path
+                                    d="M12 0C5.373 0 0 5.373 0 12s5.373 12 12 12 12-5.373 12-12S18.627 0 12 0zm5.894 16.144c-.361.361-.945.361-1.306 0l-2.588-2.588-2.588 2.588c-.361.361-.945.361-1.306 0-.361-.361-.361-.945 0-1.306l2.588-2.588-2.588-2.588c-.361-.361-.361-.945 0-1.306.361-.361.945-.361 1.306 0l2.588 2.588 2.588-2.588c.361-.361.945-.361 1.306 0 .361.361.361.945 0 1.306l-2.588 2.588 2.588 2.588c.361.361.361.945 0 1.306z" />
+                            </svg>
+                        </a>
+                        <a href="#" class="social-link" title="YouTube">
+                            <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
+                                <path
+                                    d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z" />
+                            </svg>
+                        </a>
+                    </div>
+                </div>
+
+                <div class="footer-column">
+                    <h3 class="footer-title">Liên kết nhanh</h3>
+                    <ul class="footer-list">
+                        <li><a href="products.html">Sản phẩm</a></li>
+                        <li><a href="news.html">Tin tức</a></li>
+                        <li><a href="diseases.html">Tra cứu bệnh</a></li>
+                        <li><a href="faq.html">Câu hỏi thường gặp</a></li>
+                        <li><a href="contact.html">Liên hệ</a></li>
+                    </ul>
+                </div>
+
+                <div class="footer-column">
+                    <h3 class="footer-title">Chính sách</h3>
+                    <ul class="footer-list">
+                        <li><a href="policies.html#shipping">Chính sách vận chuyển</a></li>
+                        <li><a href="policies.html#return">Chính sách đổi trả</a></li>
+                        <li><a href="policies.html#privacy">Chính sách bảo mật</a></li>
+                        <li><a href="policies.html#terms">Điều khoản sử dụng</a></li>
+                    </ul>
+                </div>
+
+                <div class="footer-column">
+                    <h3 class="footer-title">Thông tin liên hệ</h3>
+                    <ul class="footer-contact">
+                        <li>
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                stroke-width="2">
+                                <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z" />
+                                <circle cx="12" cy="10" r="3" />
+                            </svg>
+                            <span>123 Đường ABC, Quận XYZ, TP.HCM</span>
+                        </li>
+                        <li>
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                stroke-width="2">
+                                <path
+                                    d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z" />
+                            </svg>
+                            <a href="tel:1900xxxx">1900 xxxx</a>
+                        </li>
+                        <li>
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                stroke-width="2">
+                                <rect x="2" y="4" width="20" height="16" rx="2" />
+                                <path d="m2 7 10 7 10-7" />
+                            </svg>
+                            <a href="mailto:info@mebipha.com">info@mebipha.com</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="footer-bottom">
+                <p>&copy; 2024 Mebipha. Tất cả các quyền được bảo lưu.</p>
+                <div class="footer-payment">
+                    <span>Thanh toán:</span>
+                    <img src="images/payment-methods.png" alt="Payment Methods" style="height: 24px;"
+                        onerror="this.style.display='none'">
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Back to Top -->
+    <button class="back-to-top" id="backToTop" onclick="scrollToTop()">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <polyline points="18 15 12 9 6 15" />
+        </svg>
+    </button>
+
+    <!-- Scripts -->
+    <script src="utils.js"></script>
+    <script src="data/products.js"></script>
+    <script src="data/news.js"></script>
+    <script src="main.js"></script>
+
+    <script>
+        // Load featured products
+        document.addEventListener('DOMContentLoaded', () => {
+            const featuredProductsContainer = document.getElementById('featuredProducts');
+            const featuredNewsContainer = document.getElementById('featuredNews');
+
+            // Load featured products
+            const featuredProducts = getFeaturedProducts(8);
+            featuredProductsContainer.innerHTML = featuredProducts.map(product => `
+        <div class="product-card">
+          <div class="product-card-img-wrapper">
+            <img class="product-card-img" src="${product.image}" alt="${product.name}" onerror="this.src='data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 width=%22400%22 height=%22400%22%3E%3Crect fill=%22%2386EFAC%22 width=%22400%22 height=%22400%22/%3E%3Ctext x=%2250%25%22 y=%2250%25%22 dominant-baseline=%22middle%22 text-anchor=%22middle%22 fill=%22white%22 font-size=%2224%22%3E${product.name.substring(0, 20)}%3C/text%3E%3C/svg%3E'">
+          </div>
+          <div class="product-card-badge badge badge-${product.animalType === 'gia-suc-gia-cam' || product.animalType === 'gia-cam' || product.animalType === 'gia-suc' ? 'primary' : 'secondary'}">
+            ${product.animalType === 'thuy-san-tom' ? 'Tôm' : product.animalType === 'thuy-san-ca' ? 'Cá' : 'Gia súc/Gia cầm'}
+          </div>
+          <button class="product-card-wishlist" onclick="toggleWishlist('${product.id}', event)">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="${Wishlist.has(product.id) ? 'currentColor' : 'none'}" stroke="currentColor" stroke-width="2">
+              <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/>
+            </svg>
+          </button>
+          <div class="product-card-body">
+            <div class="product-card-brand">${product.brand}</div>
+            <h3 class="product-card-title">${product.name}</h3>
+            <div class="product-card-rating">
+              <span class="product-card-stars">⭐ ${product.rating}</span>
+              <span class="text-gray-500">(${product.reviews})</span>
+            </div>
+            <div class="product-card-price">
+              ${formatPrice(product.price)}
+              ${product.oldPrice ? `<span class="product-card-price-old">${formatPrice(product.oldPrice)}</span>` : ''}
+            </div>
+            <div class="product-card-meta">
+              ${product.packaging.slice(0, 3).map(p => `<span class="badge badge-gray">${p}</span>`).join('')}
+            </div>
+            <div class="product-card-actions">
+              <button class="btn btn-primary w-full" onclick="addToCart('${product.id}')">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <circle cx="9" cy="21" r="1"/>
+                  <circle cx="20" cy="21" r="1"/>
+                  <path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"/>
+                </svg>
+                Thêm vào giỏ
+              </button>
+            </div>
+          </div>
+        </div>
+      `).join('');
+
+            // Load featured news
+            const featuredNews = getFeaturedNews(3);
+            featuredNewsContainer.innerHTML = featuredNews.map(news => `
+        <div class="card">
+          <img class="card-img" src="${news.image}" alt="${news.title}" style="height: 200px; object-fit: cover;" onerror="this.src='data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 width=%22600%22 height=%22400%22%3E%3Crect fill=%22%233B82F6%22 width=%22600%22 height=%22400%22/%3E%3Ctext x=%2250%25%22 y=%2250%25%22 dominant-baseline=%22middle%22 text-anchor=%22middle%22 fill=%22white%22 font-size=%2224%22%3ENews Image%3C/text%3E%3C/svg%3E'">
+          <div class="card-body">
+            <div class="d-flex justify-between align-center mb-2">
+              <span class="badge badge-primary">${getCategoryLabel(news.category)}</span>
+              <span class="text-sm text-gray-500">${getRelativeTime(news.publishedAt)}</span>
+            </div>
+            <h3 class="card-title">${news.title}</h3>
+            <p class="card-text">${news.excerpt}</p>
+            <a href="news-detail.html?id=${news.id}" class="btn btn-outline">Đọc thêm</a>
+          </div>
+        </div>
+      `).join('');
+        });
+
+        function getCategoryLabel(category) {
+            const labels = {
+                'khuyen-mai': 'Khuyến mãi',
+                'kien-thuc-chan-nuoi': 'Kiến thức',
+                'phong-benh-dieu-tri': 'Phòng bệnh',
+                'dinh-duong': 'Dinh dưỡng',
+                'thoi-tiet-mua-vu': 'Thời tiết'
+            };
+            return labels[category] || category;
+        }
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html lang="vi">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Liên hệ - Mebipha</title>
+
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="components.css">
+    <link rel="stylesheet" href="layout.css">
+</head>
+
+<body>
+    <!-- Header -->
+    <header class="header" id="header">
+        <div class="container">
+            <div class="header-main">
+                <div class="header-logo">
+                    <a href="index.html">
+                        <span class="logo-text"
+                            style="font-size: 24px; font-weight: bold; color: var(--color-primary);">MEBIPHA</span>
+                    </a>
+                </div>
+                <nav class="header-nav md:d-flex">
+                    <a href="index.html" class="nav-link">Trang chủ</a>
+                    <a href="products.html" class="nav-link">Sản phẩm</a>
+                    <a href="news.html" class="nav-link">Tin tức</a>
+                    <a href="diseases.html" class="nav-link">Tra cứu bệnh</a>
+                    <a href="contact.html" class="nav-link active">Liên hệ</a>
+                </nav>
+                <div class="header-actions">
+                    <button class="btn-icon cart-btn" onclick="window.location.href='cart.html'">
+                        🛒
+                        <span class="cart-badge">0</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Page Content -->
+    <div class="container mt-8 mb-12">
+        <div class="text-center mb-12">
+            <h1 class="text-4xl font-bold mb-4">Liên hệ với chúng tôi</h1>
+            <p class="text-xl text-gray-600">Chúng tôi luôn sẵn sàng hỗ trợ bạn 24/7</p>
+        </div>
+
+        <div
+            style="display: grid; grid-template-columns: 1fr 1fr; gap: var(--space-12); margin-bottom: var(--space-12);">
+            <!-- Contact Form -->
+            <div class="bg-white rounded-lg shadow-md p-8">
+                <h2 class="text-2xl font-bold mb-6">Gửi tin nhắn</h2>
+
+                <form id="contactForm" data-validate onsubmit="handleContactSubmit(event)">
+                    <div class="form-group">
+                        <label class="form-label required">Họ và tên</label>
+                        <input type="text" class="form-input" required placeholder="Nguyễn Văn A">
+                        <span class="form-error"></span>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label required">Email</label>
+                        <input type="email" class="form-input" required placeholder="email@example.com">
+                        <span class="form-error"></span>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label required">Số điện thoại</label>
+                        <input type="tel" class="form-input" required placeholder="0912345678">
+                        <span class="form-error"></span>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label required">Chủ đề</label>
+                        <select class="form-select" required>
+                            <option value="">Chọn chủ đề</option>
+                            <option value="product">Tư vấn sản phẩm</option>
+                            <option value="order">Đơn hàng</option>
+                            <option value="partnership">Hợp tác kinh doanh</option>
+                            <option value="complaint">Khiếu nại</option>
+                            <option value="other">Khác</option>
+                        </select>
+                        <span class="form-error"></span>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label">Mã đơn hàng (nếu có)</label>
+                        <input type="text" class="form-input" placeholder="#A2024-12345">
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label required">Nội dung</label>
+                        <textarea class="form-textarea" required placeholder="Nhập nội dung tin nhắn của bạn..."
+                            rows="5"></textarea>
+                        <span class="form-error"></span>
+                    </div>
+
+                    <button type="submit" class="btn btn-primary btn-lg w-full">
+                        Gửi tin nhắn
+                    </button>
+                </form>
+            </div>
+
+            <!-- Contact Info -->
+            <div>
+                <div class="bg-primary text-white rounded-lg p-8 mb-6">
+                    <h2 class="text-2xl font-bold mb-6">Thông tin liên hệ</h2>
+
+                    <div class="d-flex flex-column gap-6">
+                        <div class="d-flex gap-4">
+                            <div
+                                style="width: 48px; height: 48px; background: rgba(255,255,255,0.2); border-radius: 50%; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">
+                                📍
+                            </div>
+                            <div>
+                                <h3 class="font-semibold mb-2">Địa chỉ</h3>
+                                <p>123 Đường ABC, Phường XYZ<br>Quận 1, TP. Hồ Chí Minh</p>
+                            </div>
+                        </div>
+
+                        <div class="d-flex gap-4">
+                            <div
+                                style="width: 48px; height: 48px; background: rgba(255,255,255,0.2); border-radius: 50%; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">
+                                📞
+                            </div>
+                            <div>
+                                <h3 class="font-semibold mb-2">Hotline</h3>
+                                <p><a href="tel:1900xxxx" class="text-white"
+                                        style="font-size: 20px; font-weight: bold;">1900 xxxx</a></p>
+                                <p class="text-sm" style="opacity: 0.9;">Hoạt động 24/7</p>
+                            </div>
+                        </div>
+
+                        <div class="d-flex gap-4">
+                            <div
+                                style="width: 48px; height: 48px; background: rgba(255,255,255,0.2); border-radius: 50%; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">
+                                ✉️
+                            </div>
+                            <div>
+                                <h3 class="font-semibold mb-2">Email</h3>
+                                <p><a href="mailto:info@mebipha.com" class="text-white">info@mebipha.com</a></p>
+                                <p><a href="mailto:support@mebipha.com" class="text-white">support@mebipha.com</a></p>
+                            </div>
+                        </div>
+
+                        <div class="d-flex gap-4">
+                            <div
+                                style="width: 48px; height: 48px; background: rgba(255,255,255,0.2); border-radius: 50%; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">
+                                🕐
+                            </div>
+                            <div>
+                                <h3 class="font-semibold mb-2">Giờ làm việc</h3>
+                                <p>Thứ 2 - Thứ 6: 8:00 - 17:30</p>
+                                <p>Thứ 7: 8:00 - 12:00</p>
+                                <p>Chủ nhật: Nghỉ</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="bg-white rounded-lg shadow-md p-6">
+                    <h3 class="font-semibold mb-4">Kết nối với chúng tôi</h3>
+                    <div class="d-flex gap-3">
+                        <a href="#" class="social-link bg-primary text-white"
+                            style="width: 48px; height: 48px; display: flex; align-items: center; justify-content: center; border-radius: 8px;">
+                            FB
+                        </a>
+                        <a href="#" class="social-link bg-primary text-white"
+                            style="width: 48px; height: 48px; display: flex; align-items: center; justify-content: center; border-radius: 8px;">
+                            ZL
+                        </a>
+                        <a href="#" class="social-link bg-primary text-white"
+                            style="width: 48px; height: 48px; display: flex; align-items: center; justify-content: center; border-radius: 8px;">
+                            YT
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Live Chat Widget -->
+                <div class="bg-white rounded-lg shadow-md p-6 mt-6">
+                    <h3 class="font-semibold mb-3 d-flex align-center gap-2">
+                        💬 Live Chat
+                    </h3>
+                    <p class="text-gray-600 mb-4">Nhắn tin trực tiếp với chúng tôi để được hỗ trợ nhanh chóng</p>
+                    <button class="btn btn-secondary w-full" onclick="alert('Tính năng Chat đang được phát triển')">
+                        Bắt đầu trò chuyện
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Map -->
+        <div class="bg-white rounded-lg shadow-md p-2">
+            <div
+                style="width: 100%; height: 400px; background: linear-gradient(135deg, #86EFAC 0%, #3B82F6 100%); border-radius: 8px; display: flex; align-items: center; justify-content: center; color: white; font-size: 24px; font-weight: bold;">
+                🗺️ Google Maps (Demo)
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-bottom">
+                <p>&copy; 2024 Mebipha. Tất cả các quyền được bảo lưu.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Scripts -->
+    <script src="utils.js"></script>
+    <script src="main.js"></script>
+
+    <script>
+        function handleContactSubmit(event) {
+            event.preventDefault();
+
+            if (!validateForm(event.target)) {
+                return;
+            }
+
+            // Mock form submission
+            Toast.success('Cảm ơn bạn đã liên hệ! Chúng tôi sẽ phản hồi trong 24h.');
+            event.target.reset();
+        }
+    </script>
+</body>
+
+</html>

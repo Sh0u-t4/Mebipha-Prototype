@@ -1,0 +1,328 @@
+<!DOCTYPE html>
+<html lang="vi">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Sản phẩm thuốc thú y, thủy sản chất lượng cao - Mebipha">
+    <title>Sản phẩm - Mebipha</title>
+
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="components.css">
+    <link rel="stylesheet" href="layout.css">
+</head>
+
+<body>
+    <!-- Header (simplified, same as index.html) -->
+    <header class="header" id="header">
+        <div class="container">
+            <div class="header-main">
+                <div class="header-logo">
+                    <a href="index.html">
+                        <span class="logo-text"
+                            style="font-size: 24px; font-weight: bold; color: var(--color-primary);">MEBIPHA</span>
+                    </a>
+                </div>
+                <nav class="header-nav md:d-flex">
+                    <a href="index.html" class="nav-link">Trang chủ</a>
+                    <a href="products.html" class="nav-link active">Sản phẩm</a>
+                    <a href="news.html" class="nav-link">Tin tức</a>
+                    <a href="diseases.html" class="nav-link">Tra cứu bệnh</a>
+                    <a href="contact.html" class="nav-link">Liên hệ</a>
+                </nav>
+                <div class="header-search">
+                    <form class="search-form" onsubmit="handleSearch(event)">
+                        <input type="search" class="search-input" placeholder="Tìm kiếm sản phẩm..." id="searchInput">
+                        <button type="submit" class="search-btn">🔍</button>
+                    </form>
+                </div>
+                <div class="header-actions">
+                    <button class="btn-icon cart-btn" onclick="window.location.href='cart.html'">
+                        🛒
+                        <span class="cart-badge">0</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Breadcrumb -->
+    <div class="container mt-4">
+        <div class="breadcrumb">
+            <div class="breadcrumb-item"><a href="index.html" class="breadcrumb-link">Trang chủ</a></div>
+            <span class="breadcrumb-separator">›</span>
+            <div class="breadcrumb-item"><span class="breadcrumb-current">Sản phẩm</span></div>
+        </div>
+    </div>
+
+    <!-- Main Content -->
+    <div class="container mt-6 mb-8">
+        <div style="display: grid; grid-template-columns: 280px 1fr; gap: var(--space-6);">
+
+            <!-- Filters Sidebar -->
+            <aside class="filters-sidebar">
+                <div class="bg-white rounded-lg shadow-sm p-6">
+                    <h3 class="font-semibold mb-4">Bộ lọc</h3>
+
+                    <!-- Category Filter -->
+                    <div class="mb-6">
+                        <h4 class="font-medium mb-3">Danh mục</h4>
+                        <div class="d-flex flex-column gap-2">
+                            <label class="form-check">
+                                <input type="radio" name="category" value="" checked onchange="applyFilters()">
+                                <span class="form-check-label">Tất cả</span>
+                            </label>
+                            <label class="form-check">
+                                <input type="radio" name="category" value="thuoc-thu-y" onchange="applyFilters()">
+                                <span class="form-check-label">Thuốc thú y</span>
+                            </label>
+                            <label class="form-check">
+                                <input type="radio" name="category" value="thuoc-tom" onchange="applyFilters()">
+                                <span class="form-check-label">Thuốc tôm</span>
+                            </label>
+                            <label class="form-check">
+                                <input type="radio" name="category" value="thuoc-ca" onchange="applyFilters()">
+                                <span class="form-check-label">Thuốc cá</span>
+                            </label>
+                        </div>
+                    </div>
+
+                    <!-- Purpose Filter -->
+                    <div class="mb-6">
+                        <h4 class="font-medium mb-3">Công dụng</h4>
+                        <div class="d-flex flex-column gap-2">
+                            <label class="form-check">
+                                <input type="checkbox" value="khang-sinh" onchange="applyFilters()">
+                                <span class="form-check-label">Kháng sinh</span>
+                            </label>
+                            <label class="form-check">
+                                <input type="checkbox" value="dieu-tri" onchange="applyFilters()">
+                                <span class="form-check-label">Điều trị</span>
+                            </label>
+                            <label class="form-check">
+                                <input type="checkbox" value="dinh-duong" onchange="applyFilters()">
+                                <span class="form-check-label">Dinh dưỡng</span>
+                            </label>
+                            <label class="form-check">
+                                <input type="checkbox" value="vitamin-khoang" onchange="applyFilters()">
+                                <span class="form-check-label">Vitamin & Khoáng</span>
+                            </label>
+                            <label class="form-check">
+                                <input type="checkbox" value="sat-trung" onchange="applyFilters()">
+                                <span class="form-check-label">Sát trùng</span>
+                            </label>
+                        </div>
+                    </div>
+
+                    <!-- Price Filter -->
+                    <div class="mb-6">
+                        <h4 class="font-medium mb-3">Khoảng giá</h4>
+                        <div class="d-flex gap-2 mb-3">
+                            <input type="number" class="form-input" placeholder="Từ" id="minPrice"
+                                onchange="applyFilters()">
+                            <input type="number" class="form-input" placeholder="Đến" id="maxPrice"
+                                onchange="applyFilters()">
+                        </div>
+                        <div class="d-flex flex-column gap-2">
+                            <label class="form-check">
+                                <input type="radio" name="priceRange" value="" checked onchange="applyPriceRange(this)">
+                                <span class="form-check-label">Tất cả</span>
+                            </label>
+                            <label class="form-check">
+                                <input type="radio" name="priceRange" value="0-100000" onchange="applyPriceRange(this)">
+                                <span class="form-check-label">Dưới 100k</span>
+                            </label>
+                            <label class="form-check">
+                                <input type="radio" name="priceRange" value="100000-300000"
+                                    onchange="applyPriceRange(this)">
+                                <span class="form-check-label">100k - 300k</span>
+                            </label>
+                            <label class="form-check">
+                                <input type="radio" name="priceRange" value="300000-500000"
+                                    onchange="applyPriceRange(this)">
+                                <span class="form-check-label">300k - 500k</span>
+                            </label>
+                            <label class="form-check">
+                                <input type="radio" name="priceRange" value="500000-999999999"
+                                    onchange="applyPriceRange(this)">
+                                <span class="form-check-label">Trên 500k</span>
+                            </label>
+                        </div>
+                    </div>
+
+                    <button class="btn btn-outline w-full" onclick="clearFilters()">Xóa bộ lọc</button>
+                </div>
+            </aside>
+
+            <!-- Product Grid -->
+            <main>
+                <div class="d-flex justify-between align-center mb-6">
+                    <div>
+                        <h1 class="text-2xl font-bold mb-2">Sản phẩm</h1>
+                        <p class="text-gray-600" id="productCount">Đang tải...</p>
+                    </div>
+                    <select class="form-select" style="width: 200px;" onchange="applySorting(this.value)">
+                        <option value="">Sắp xếp mặc định</option>
+                        <option value="price-asc">Giá tăng dần</option>
+                        <option value="price-desc">Giá giảm dần</option>
+                        <option value="name-asc">Tên A-Z</option>
+                        <option value="rating">Đánh giá cao</option>
+                        <option value="popular">Phổ biến nhất</option>
+                    </select>
+                </div>
+
+                <div class="product-grid" id="productGrid">
+                    <!-- Products will be loaded here -->
+                </div>
+
+                <!-- Pagination -->
+                <div class="pagination" id="pagination" style="display: none;">
+                    <!-- Pagination will be rendered here -->
+                </div>
+            </main>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-bottom">
+                <p>&copy; 2024 Mebipha. Tất cả các quyền được bảo lưu.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Scripts -->
+    <script src="utils.js"></script>
+    <script src="data/products.js"></script>
+    <script src="main.js"></script>
+
+    <script>
+        let currentFilters = {
+            category: '',
+            purpose: [],
+            minPrice: null,
+            maxPrice: null,
+            keyword: '',
+            sortBy: ''
+        };
+
+        function applyFilters() {
+            const categoryRadio = document.querySelector('input[name="category"]:checked');
+            currentFilters.category = categoryRadio ? categoryRadio.value : '';
+
+            const purposeCheckboxes = document.querySelectorAll('input[type="checkbox"]:checked');
+            currentFilters.purpose = Array.from(purposeCheckboxes).map(cb => cb.value);
+
+            const minPrice = document.getElementById('minPrice').value;
+            const maxPrice = document.getElementById('maxPrice').value;
+            currentFilters.minPrice = minPrice ? parseInt(minPrice) : null;
+            currentFilters.maxPrice = maxPrice ? parseInt(maxPrice) : null;
+
+            renderProducts();
+        }
+
+        function applyPriceRange(radio) {
+            if (radio.value) {
+                const [min, max] = radio.value.split('-').map(Number);
+                document.getElementById('minPrice').value = min;
+                document.getElementById('maxPrice').value = max;
+            } else {
+                document.getElementById('minPrice').value = '';
+                document.getElementById('maxPrice').value = '';
+            }
+            applyFilters();
+        }
+
+        function applySorting(sortBy) {
+            currentFilters.sortBy = sortBy;
+            renderProducts();
+        }
+
+        function clearFilters() {
+            document.querySelector('input[name="category"][value=""]').checked = true;
+            document.querySelectorAll('input[type="checkbox"]').forEach(cb => cb.checked = false);
+            document.querySelectorAll('input[name="priceRange"]')[0].checked = true;
+            document.getElementById('minPrice').value = '';
+            document.getElementById('maxPrice').value = '';
+            currentFilters = {
+                category: '',
+                purpose: [],
+                minPrice: null,
+                maxPrice: null,
+                keyword: '',
+                sortBy: ''
+            };
+            renderProducts();
+        }
+
+        function renderProducts() {
+            const products = filterProducts(currentFilters);
+            const productGrid = document.getElementById('productGrid');
+            const productCount = document.getElementById('productCount');
+
+            productCount.textContent = `Tìm thấy ${products.length} sản phẩm`;
+
+            if (products.length === 0) {
+                productGrid.innerHTML = `
+          <div class="text-center p-8" style="grid-column: 1 / -1;">
+            <p class="text-lg text-gray-600 mb-4">Không tìm thấy sản phẩm nào</p>
+            <button class="btn btn-primary" onclick="clearFilters()">Xóa bộ lọc</button>
+          </div>
+        `;
+                return;
+            }
+
+            productGrid.innerHTML = products.map(product => `
+        <div class="product-card">
+          <div class="product-card-img-wrapper">
+            <img class="product-card-img" src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='400' height='400'%3E%3Crect fill='%2386EFAC' width='400' height='400'/%3E%3Ctext x='50%25' y='50%25' dominant-baseline='middle' text-anchor='middle' fill='white' font-size='16' font-family='Arial'%3E${encodeURIComponent(product.name.substring(0, 30))}%3C/text%3E%3C/svg%3E" alt="${product.name}">
+          </div>
+          <div class="product-card-badge badge badge-${product.animalType.includes('thuy-san') ? 'secondary' : 'primary'}">
+            ${product.animalType === 'thuy-san-tom' ? 'Tôm' : product.animalType === 'thuy-san-ca' ? 'Cá' : 'Gia súc/Giacầm'}
+          </div>
+          <button class="product-card-wishlist" onclick="toggleWishlist('${product.id}', event)">
+            ${Wishlist.has(product.id) ? '❤️' : '🤍'}
+          </button>
+          <div class="product-card-body">
+            <div class="product-card-brand">${product.brand}</div>
+            <h3 class="product-card-title">${product.name}</h3>
+            <div class="product-card-rating">
+              <span class="product-card-stars">⭐ ${product.rating}</span>
+              <span class="text-gray-500">(${product.reviews})</span>
+            </div>
+            <div class="product-card-price">
+              ${formatPrice(product.price)}
+              ${product.oldPrice ? `<span class="product-card-price-old">${formatPrice(product.oldPrice)}</span>` : ''}
+            </div>
+            <div class="product-card-meta">
+              ${product.packaging.slice(0, 3).map(p => `<span class="badge badge-gray">${p}</span>`).join('')}
+            </div>
+            <div class="product-card-actions">
+              <button class="btn btn-primary w-full" onclick="addToCart('${product.id}')">🛒 Thêm vào giỏ</button>
+            </div>
+          </div>
+        </div>
+      `).join('');
+        }
+
+        // Initialize on load
+        document.addEventListener('DOMContentLoaded', () => {
+            // Check for search param
+            const params = getUrlParams();
+            if (params.search) {
+                currentFilters.keyword = params.search;
+                document.getElementById('searchInput').value = params.search;
+            }
+            if (params.category) {
+                currentFilters.category = params.category;
+                const radio = document.querySelector(`input[name="category"][value="${params.category}"]`);
+                if (radio) radio.checked = true;
+            }
+
+            renderProducts();
+        });
+    </script>
+</body>
+
+</html>

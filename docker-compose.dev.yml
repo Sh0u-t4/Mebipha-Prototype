@@ -1,0 +1,23 @@
+version: '3.8'
+
+services:
+  mebipha-web:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    image: mebipha-ecommerce:dev
+    container_name: mebipha-ecommerce-dev
+    ports:
+      - "8080:80"
+    volumes:
+      # Mount source code for live development  
+      - ./:/usr/share/nginx/html:ro
+      - ./nginx.conf:/etc/nginx/nginx.conf:ro
+      - ./default.conf:/etc/nginx/conf.d/default.conf:ro
+    restart: unless-stopped
+    networks:
+      - mebipha-network
+
+networks:
+  mebipha-network:
+    driver: bridge

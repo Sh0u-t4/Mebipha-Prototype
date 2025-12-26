@@ -1,0 +1,288 @@
+<!DOCTYPE html>
+<html lang="vi">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Giỏ hàng - Mebipha</title>
+
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="components.css">
+    <link rel="stylesheet" href="layout.css">
+</head>
+
+<body>
+    <!-- Header -->
+    <header class="header" id="header">
+        <div class="container">
+            <div class="header-main">
+                <div class="header-logo">
+                    <a href="index.html">
+                        <span class="logo-text"
+                            style="font-size: 24px; font-weight: bold; color: var(--color-primary);">MEBIPHA</span>
+                    </a>
+                </div>
+                <nav class="header-nav md:d-flex">
+                    <a href="index.html" class="nav-link">Trang chủ</a>
+                    <a href="products.html" class="nav-link">Sản phẩm</a>
+                    <a href="news.html" class="nav-link">Tin tức</a>
+                    <a href="contact.html" class="nav-link">Liên hệ</a>
+                </nav>
+                <div class="header-actions">
+                    <button class="btn-icon cart-btn" onclick="window.location.href='cart.html'">
+                        🛒
+                        <span class="cart-badge">0</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Breadcrumb -->
+    <div class="container mt-4">
+        <div class="breadcrumb">
+            <div class="breadcrumb-item"><a href="index.html" class="breadcrumb-link">Trang chủ</a></div>
+            <span class="breadcrumb-separator">›</span>
+            <div class="breadcrumb-item"><span class="breadcrumb-current">Giỏ hàng</span></div>
+        </div>
+    </div>
+
+    <!-- Cart Content -->
+    <div class="container mt-6 mb-12">
+        <h1 class="text-3xl font-bold mb-8">Giỏ hàng của bạn</h1>
+
+        <div id="cartContent">
+            <!-- Cart will be rendered here -->
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-bottom">
+                <p>&copy; 2024 Mebipha. Tất cả các quyền được bảo lưu.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Scripts -->
+    <script src="utils.js"></script>
+    <script src="data/products.js"></script>
+    <script src="main.js"></script>
+
+    <script>
+        function renderCart() {
+            const cartItems = Cart.getItems();
+            const cartContent = document.getElementById('cartContent');
+
+            if (cartItems.length === 0) {
+                cartContent.innerHTML = `
+          <div class="text-center p-12">
+            <div style="font-size: 64px; margin-bottom: 20px; opacity: 0.3;">🛒</div>
+            <h2 class="text-2xl font-semibold mb-3">Giỏ hàng trống</h2>
+            <p class="text-gray-600 mb-6">Bạn chưa có sản phẩm nào trong giỏ hàng</p>
+            <a href="products.html" class="btn btn-primary btn-lg">Tiếp tục mua sắm</a>
+            
+            <div class="mt-12">
+              <h3 class="text-xl font-semibold mb-6">Sản phẩm gợi ý</h3>
+              <div class="product-grid">
+                ${getFeaturedProducts(4).map(product => `
+                  <div class="product-card">
+                    <div class="product-card-img-wrapper">
+                      <img class="product-card-img" src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='400' height='400'%3E%3Crect fill='%2386EFAC' width='400' height='400'/%3E%3Ctext x='50%25' y='50%25' dominant-baseline='middle' text-anchor='middle' fill='white' font-size='16'%3E${encodeURIComponent(product.name.substring(0, 20))}%3C/text%3E%3C/svg%3E" alt="${product.name}">
+                    </div>
+                    <div class="product-card-body">
+                      <div class="product-card-brand">${product.brand}</div>
+                      <h3 class="product-card-title">${product.name}</h3>
+                      <div class="product-card-price">${formatPrice(product.price)}</div>
+                      <button class="btn btn-primary w-full mt-3" onclick="addToCart('${product.id}')">Thêm vào giỏ</button>
+                    </div>
+                  </div>
+                `).join('')}
+              </div>
+            </div>
+          </div>
+        `;
+                return;
+            }
+
+            // Render cart with items
+            cartContent.innerHTML = `
+        <div style="display: grid; grid-template-columns: 1fr 380px; gap: var(--space-8);">
+          <!-- Cart Items -->
+          <div>
+            <div class="bg-white rounded-lg shadow-sm">
+              <div class="p-6 border-b">
+                <div style="display: grid; grid-template-columns: 100px 1fr 120px 120px 120px 50px; gap:var(--space-4); font-weight: 600; color: var(--color-gray-700);">
+                  <div>Hình ảnh</div>
+                  <div>Sản phẩm</div>
+                  <div class="text-center">Đơn giá</div>
+                  <div class="text-center">Số lượng</div>
+                  <div class="text-center">Thành tiền</div>
+                  <div></div>
+                </div>
+              </div>
+              
+              <div class="divide-y">
+                ${cartItems.map((item, index) => `
+                  <div class="p-6">
+                    <div style="display: grid; grid-template-columns: 100px 1fr 120px 120px 120px 50px; gap: var(--space-4); align-items: center;">
+                      <div>
+                        <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='100' height='100'%3E%3Crect fill='%2386EFAC' width='100' height='100'/%3E%3C/svg%3E" alt="${item.name}" class="rounded-md">
+                      </div>
+                      <div>
+                        <h3 class="font-semibold mb-1">${item.name}</h3>
+                        ${item.variant ? `<p class="text-sm text-gray-600">Quy cách: ${item.variant}</p>` : ''}
+                      </div>
+                      <div class="text-center font-semibold">${formatPrice(item.price)}</div>
+                      <div class="d-flex align-center justify-center gap-2">
+                        <button class="btn-icon btn-sm" onclick="updateCartQuantity(${index}, ${item.quantity - 1})">-</button>
+                        <input type="number" class="form-input text-center" style="width: 60px;" value="${item.quantity}" min="1" onchange="updateCartQuantity(${index}, parseInt(this.value))">
+                        <button class="btn-icon btn-sm" onclick="updateCartQuantity(${index}, ${item.quantity + 1})">+</button>
+                      </div>
+                      <div class="text-center font-bold text-primary">${formatPrice(item.price * item.quantity)}</div>
+                      <div class="text-center">
+                        <button class="btn-icon" onclick="removeCartItem(${index})" title="Xóa">🗑️</button>
+                      </div>
+                    </div>
+                  </div>
+                `).join('')}
+              </div>
+            </div>
+
+            <div class="mt-6">
+              <a href="products.html" class="btn btn-ghost">← Tiếp tục mua sắm</a>
+            </div>
+          </div>
+
+          <!-- Cart Summary -->
+          <div>
+            <div class="bg-white rounded-lg shadow-md p-6 sticky" style="top: 100px;">
+              <h2 class="text-xl font-bold mb-6">Tóm tắt đơn hàng</h2>
+              
+              <div class="d-flex flex-column gap-4 mb-6">
+                <div class="d-flex justify-between">
+                  <span class="text-gray-600">Tạm tính</span>
+                  <span class="font-semibold">${formatPrice(Cart.getTotal())}</span>
+                </div>
+                <div class="d-flex justify-between">
+                  <span class="text-gray-600">Phí vận chuyển</span>
+                  <span class="text-sm text-gray-500">Tính sau</span>
+                </div>
+                <div class="border-t pt-4">
+                  <div class="d-flex justify-between mb-2">
+                    <span class="font-semibold">Tổng cộng</span>
+                    <span class="text-2xl font-bold text-primary">${formatPrice(Cart.getTotal())}</span>
+                  </div>
+                  <p class="text-xs text-gray-500">Đã bao gồm VAT (nếu có)</p>
+                </div>
+              </div>
+
+              <div class="mb-4">
+                <label class="form-label">Mã giảm giá</label>
+                <div class="d-flex gap-2">
+                  <input type="text" class="form-input" placeholder="Nhập mã giảm giá" id="couponCode">
+                  <button class="btn btn-secondary" onclick="applyCoupon()">Áp dụng</button>
+                </div>
+              </div>
+
+              <button class="btn btn-primary btn-lg w-full" onclick="proceedToCheckout()">
+                Tiến hành thanh toán
+              </button>
+
+              <div class="mt-6 p-4 bg-gray-50 rounded-lg">
+                <h3 class="font-semibold mb-3 d-flex align-center gap-2">
+                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <rect x="1" y="3" width="15" height="13"/>
+                    <polygon points="16 8 20 8 23 11 23 16 16 16 16 8"/>
+                    <circle cx="5.5" cy="18.5" r="2.5"/>
+                    <circle cx="18.5" cy="18.5" r="2.5"/>
+                  </svg>
+                  Chính sách vận chuyển
+                </h3>
+                <ul class="text-sm text-gray-600 d-flex flex-column gap-2">
+                  <li>✓ Freeship đơn từ 5 triệu</li>
+                  <li>✓ Giao hàng toàn quốc</li>
+                  <li>✓ Kiểm tra hàng trước khi nhận</li>
+                  <li>✓ Đổi trả trong 7 ngày</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+      `;
+        }
+
+        function updateCartQuantity(index, quantity) {
+            if (quantity < 1) {
+                removeCartItem(index);
+                return;
+            }
+            Cart.update(index, quantity);
+            renderCart();
+            Toast.info('Đã cập nhật số lượng');
+        }
+
+        function removeCartItem(index) {
+            Modal.confirm(
+                'Xóa sản phẩm',
+                'Bạn có chắc muốn xóa sản phẩm này khỏi giỏ hàng?',
+                () => {
+                    Cart.remove(index);
+                    renderCart();
+                    Toast.success('Đã xóa sản phẩm');
+                }
+            );
+        }
+
+        function applyCoupon() {
+            const code = document.getElementById('couponCode').value.trim();
+            if (!code) {
+                Toast.warning('Vui lòng nhập mã giảm giá');
+                return;
+            }
+
+            // Mock coupon validation
+            if (code.toUpperCase() === 'MEBIPHA2024') {
+                Toast.success('Đã áp dụng mã giảm giá 10%');
+            } else {
+                Toast.error('Mã giảm giá không hợp lệ');
+            }
+        }
+
+        function proceedToCheckout() {
+            const items = Cart.getItems();
+            if (items.length === 0) {
+                Toast.warning('Giỏ hàng trống');
+                return;
+            }
+
+            // Check if user is logged in
+            if (!User.isLoggedIn()) {
+                Modal.confirm(
+                    'Đăng nhập',
+                    'Bạn cần đăng nhập để tiếp tục thanh toán. Bạn có muốn đăng nhập ngay?',
+                    () => {
+                        window.location.href = 'login.html?redirect=checkout.html';
+                    },
+                    () => {
+                        // Continue as guest (mock)
+                        Toast.info('Tiếp tục với tư cách khách');
+                        setTimeout(() => {
+                            window.location.href = 'checkout.html';
+                        }, 1000);
+                    }
+                );
+            } else {
+                window.location.href = 'checkout.html';
+            }
+        }
+
+        // Initialize
+        document.addEventListener('DOMContentLoaded', () => {
+            renderCart();
+        });
+    </script>
+</body>
+
+</html>
