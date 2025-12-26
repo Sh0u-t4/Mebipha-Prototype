@@ -2,81 +2,163 @@
 <html lang="vi">
 
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Giỏ hàng - Mebipha</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Giỏ hàng - Mebipha</title>
 
-    <link rel="stylesheet" href="styles.css">
-    <link rel="stylesheet" href="components.css">
-    <link rel="stylesheet" href="layout.css">
+  <link rel="stylesheet" href="styles.css">
+  <link rel="stylesheet" href="components.css">
+  <link rel="stylesheet" href="layout.css">
 </head>
 
 <body>
-    <!-- Header -->
-    <header class="header" id="header">
-        <div class="container">
-            <div class="header-main">
-                <div class="header-logo">
-                    <a href="index.html">
-                        <span class="logo-text"
-                            style="font-size: 24px; font-weight: bold; color: var(--color-primary);">MEBIPHA</span>
-                    </a>
-                </div>
-                <nav class="header-nav md:d-flex">
-                    <a href="index.html" class="nav-link">Trang chủ</a>
-                    <a href="products.html" class="nav-link">Sản phẩm</a>
-                    <a href="news.html" class="nav-link">Tin tức</a>
-                    <a href="contact.html" class="nav-link">Liên hệ</a>
-                </nav>
-                <div class="header-actions">
-                    <button class="btn-icon cart-btn" onclick="window.location.href='cart.html'">
-                        🛒
-                        <span class="cart-badge">0</span>
-                    </button>
-                </div>
-            </div>
-        </div>
-    </header>
+  <!-- Header -->
+  <header class="header" id="header">
+    <div class="header-top">
+      <div class="container">
+        <div class="header-main-row">
+          <!-- Logo -->
+          <div class="header-logo">
+            <a href="index.html" class="logo-link">
+              <img src="images/logo.png" alt="Mebipha Logo" class="logo-img"
+                onerror="this.style.display='none'; this.nextElementSibling.style.display='block';">
+              <div class="logo-text-wrapper">
+                <span class="logo-brand">MEBIPHA</span>
+                <span class="logo-slogan">GIẢI PHÁP CHĂN NUÔI 4.0</span>
+              </div>
+            </a>
+          </div>
 
-    <!-- Breadcrumb -->
-    <div class="container mt-4">
-        <div class="breadcrumb">
-            <div class="breadcrumb-item"><a href="index.html" class="breadcrumb-link">Trang chủ</a></div>
-            <span class="breadcrumb-separator">›</span>
-            <div class="breadcrumb-item"><span class="breadcrumb-current">Giỏ hàng</span></div>
+          <!-- Search Bar -->
+          <div class="header-search">
+            <form class="search-form" onsubmit="handleSearch(event)">
+              <input type="search" class="search-input" placeholder="Tìm thuốc, hoạt chất, hoặc bệnh lý..."
+                id="searchInput">
+              <button type="submit" class="search-btn-custom">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <circle cx="11" cy="11" r="8"></circle>
+                  <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+                </svg>
+                Tìm kiếm
+              </button>
+            </form>
+          </div>
+
+          <!-- Header Actions -->
+          <div class="header-actions">
+            <a href="#" class="action-item">
+              <div class="action-icon">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                  <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
+                  <polyline points="14 2 14 8 20 8"></polyline>
+                  <line x1="16" y1="13" x2="8" y2="13"></line>
+                  <line x1="16" y1="17" x2="8" y2="17"></line>
+                  <polyline points="10 9 9 9 8 9"></polyline>
+                </svg>
+              </div>
+              <span class="action-text">KÊ ĐƠN ONLINE</span>
+            </a>
+            <a href="cart.html" class="action-item cart-btn-wrapper">
+              <div class="action-icon">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                  <circle cx="9" cy="21" r="1"></circle>
+                  <circle cx="20" cy="21" r="1"></circle>
+                  <path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"></path>
+                </svg>
+                <span class="cart-badge">0</span>
+              </div>
+              <span class="action-text">GIỎ HÀNG</span>
+            </a>
+
+            <!-- Mobile Menu Button -->
+            <button class="btn-icon mobile-menu-btn md:d-none" onclick="toggleMobileMenu()">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <line x1="3" y1="6" x2="21" y2="6" />
+                <line x1="3" y1="12" x2="21" y2="12" />
+                <line x1="3" y1="18" x2="21" y2="18" />
+              </svg>
+            </button>
+          </div>
         </div>
+      </div>
     </div>
 
-    <!-- Cart Content -->
-    <div class="container mt-6 mb-12">
-        <h1 class="text-3xl font-bold mb-8">Giỏ hàng của bạn</h1>
-
-        <div id="cartContent">
-            <!-- Cart will be rendered here -->
-        </div>
+    <!-- Navigation Bar -->
+    <div class="header-nav-bar">
+      <div class="container">
+        <nav class="main-nav">
+          <a href="index.html" class="main-nav-link">TRANG CHỦ</a>
+          <a href="products.html" class="main-nav-link">CỬA HÀNG</a>
+          <a href="diseases.html" class="main-nav-link">TRA CỨU BỆNH</a>
+          <a href="news.html" class="main-nav-link">TIN TỨC</a>
+          <a href="contact.html" class="main-nav-link">LIÊN HỆ</a>
+        </nav>
+      </div>
     </div>
+  </header>
 
-    <!-- Footer -->
-    <footer class="footer">
-        <div class="container">
-            <div class="footer-bottom">
-                <p>&copy; 2024 Mebipha. Tất cả các quyền được bảo lưu.</p>
-            </div>
-        </div>
-    </footer>
+  <!-- Mobile Menu -->
+  <div class="mobile-menu" id="mobileMenu">
+    <div class="mobile-menu-content">
+      <div class="mobile-menu-header">
+        <span class="font-bold">Menu</span>
+        <button class="btn-icon" onclick="toggleMobileMenu()">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <line x1="18" y1="6" x2="6" y2="18" />
+            <line x1="6" y1="6" x2="18" y2="18" />
+          </svg>
+        </button>
+      </div>
+      <nav class="mobile-nav">
+        <a href="index.html" class="mobile-nav-link">TRANG CHỦ</a>
+        <a href="products.html" class="mobile-nav-link">CỬA HÀNG</a>
+        <a href="diseases.html" class="mobile-nav-link">TRA CỨU BỆNH</a>
+        <a href="news.html" class="mobile-nav-link">TIN TỨC</a>
+        <a href="contact.html" class="mobile-nav-link">LIÊN HỆ</a>
+        <a href="account.html" class="mobile-nav-link">TÀI KHOẢN</a>
+      </nav>
+    </div>
+  </div>
 
-    <!-- Scripts -->
-    <script src="utils.js"></script>
-    <script src="data/products.js"></script>
-    <script src="main.js"></script>
+  <!-- Breadcrumb -->
+  <div class="container mt-4">
+    <div class="breadcrumb">
+      <div class="breadcrumb-item"><a href="index.html" class="breadcrumb-link">Trang chủ</a></div>
+      <span class="breadcrumb-separator">›</span>
+      <div class="breadcrumb-item"><span class="breadcrumb-current">Giỏ hàng</span></div>
+    </div>
+  </div>
 
-    <script>
-        function renderCart() {
-            const cartItems = Cart.getItems();
-            const cartContent = document.getElementById('cartContent');
+  <!-- Cart Content -->
+  <div class="container mt-6 mb-12">
+    <h1 class="text-3xl font-bold mb-8">Giỏ hàng của bạn</h1>
 
-            if (cartItems.length === 0) {
-                cartContent.innerHTML = `
+    <div id="cartContent">
+      <!-- Cart will be rendered here -->
+    </div>
+  </div>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="container">
+      <div class="footer-bottom">
+        <p>&copy; 2024 Mebipha. Tất cả các quyền được bảo lưu.</p>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Scripts -->
+  <script src="utils.js"></script>
+  <script src="data/products.js"></script>
+  <script src="main.js"></script>
+
+  <script>
+    function renderCart() {
+      const cartItems = Cart.getItems();
+      const cartContent = document.getElementById('cartContent');
+
+      if (cartItems.length === 0) {
+        cartContent.innerHTML = `
           <div class="text-center p-12">
             <div style="font-size: 64px; margin-bottom: 20px; opacity: 0.3;">🛒</div>
             <h2 class="text-2xl font-semibold mb-3">Giỏ hàng trống</h2>
@@ -103,11 +185,11 @@
             </div>
           </div>
         `;
-                return;
-            }
+        return;
+      }
 
-            // Render cart with items
-            cartContent.innerHTML = `
+      // Render cart with items
+      cartContent.innerHTML = `
         <div style="display: grid; grid-template-columns: 1fr 380px; gap: var(--space-8);">
           <!-- Cart Items -->
           <div>
@@ -211,78 +293,78 @@
           </div>
         </div>
       `;
+    }
+
+    function updateCartQuantity(index, quantity) {
+      if (quantity < 1) {
+        removeCartItem(index);
+        return;
+      }
+      Cart.update(index, quantity);
+      renderCart();
+      Toast.info('Đã cập nhật số lượng');
+    }
+
+    function removeCartItem(index) {
+      Modal.confirm(
+        'Xóa sản phẩm',
+        'Bạn có chắc muốn xóa sản phẩm này khỏi giỏ hàng?',
+        () => {
+          Cart.remove(index);
+          renderCart();
+          Toast.success('Đã xóa sản phẩm');
         }
+      );
+    }
 
-        function updateCartQuantity(index, quantity) {
-            if (quantity < 1) {
-                removeCartItem(index);
-                return;
-            }
-            Cart.update(index, quantity);
-            renderCart();
-            Toast.info('Đã cập nhật số lượng');
-        }
+    function applyCoupon() {
+      const code = document.getElementById('couponCode').value.trim();
+      if (!code) {
+        Toast.warning('Vui lòng nhập mã giảm giá');
+        return;
+      }
 
-        function removeCartItem(index) {
-            Modal.confirm(
-                'Xóa sản phẩm',
-                'Bạn có chắc muốn xóa sản phẩm này khỏi giỏ hàng?',
-                () => {
-                    Cart.remove(index);
-                    renderCart();
-                    Toast.success('Đã xóa sản phẩm');
-                }
-            );
-        }
+      // Mock coupon validation
+      if (code.toUpperCase() === 'MEBIPHA2024') {
+        Toast.success('Đã áp dụng mã giảm giá 10%');
+      } else {
+        Toast.error('Mã giảm giá không hợp lệ');
+      }
+    }
 
-        function applyCoupon() {
-            const code = document.getElementById('couponCode').value.trim();
-            if (!code) {
-                Toast.warning('Vui lòng nhập mã giảm giá');
-                return;
-            }
+    function proceedToCheckout() {
+      const items = Cart.getItems();
+      if (items.length === 0) {
+        Toast.warning('Giỏ hàng trống');
+        return;
+      }
 
-            // Mock coupon validation
-            if (code.toUpperCase() === 'MEBIPHA2024') {
-                Toast.success('Đã áp dụng mã giảm giá 10%');
-            } else {
-                Toast.error('Mã giảm giá không hợp lệ');
-            }
-        }
+      // Check if user is logged in
+      if (!User.isLoggedIn()) {
+        Modal.confirm(
+          'Đăng nhập',
+          'Bạn cần đăng nhập để tiếp tục thanh toán. Bạn có muốn đăng nhập ngay?',
+          () => {
+            window.location.href = 'login.html?redirect=checkout.html';
+          },
+          () => {
+            // Continue as guest (mock)
+            Toast.info('Tiếp tục với tư cách khách');
+            setTimeout(() => {
+              window.location.href = 'checkout.html';
+            }, 1000);
+          }
+        );
+      } else {
+        window.location.href = 'checkout.html';
+      }
+    }
 
-        function proceedToCheckout() {
-            const items = Cart.getItems();
-            if (items.length === 0) {
-                Toast.warning('Giỏ hàng trống');
-                return;
-            }
-
-            // Check if user is logged in
-            if (!User.isLoggedIn()) {
-                Modal.confirm(
-                    'Đăng nhập',
-                    'Bạn cần đăng nhập để tiếp tục thanh toán. Bạn có muốn đăng nhập ngay?',
-                    () => {
-                        window.location.href = 'login.html?redirect=checkout.html';
-                    },
-                    () => {
-                        // Continue as guest (mock)
-                        Toast.info('Tiếp tục với tư cách khách');
-                        setTimeout(() => {
-                            window.location.href = 'checkout.html';
-                        }, 1000);
-                    }
-                );
-            } else {
-                window.location.href = 'checkout.html';
-            }
-        }
-
-        // Initialize
-        document.addEventListener('DOMContentLoaded', () => {
-            renderCart();
-        });
-    </script>
+    // Initialize
+    document.addEventListener('DOMContentLoaded', () => {
+      renderCart();
+    });
+  </script>
 </body>
 
 </html>
