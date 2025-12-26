@@ -8,7 +8,7 @@ services:
     image: mebipha-ecommerce:dev
     container_name: mebipha-ecommerce-dev
     ports:
-      - "8080:80"
+      - "8080:8080"
     volumes:
       # Mount source code for live development  
       - ./:/usr/share/nginx/html:ro
