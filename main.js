@@ -3,6 +3,89 @@
    ========================================== */
 
 // ==========================================
+// HERO CAROUSEL
+// ==========================================
+
+const heroCarousel = {
+    currentSlide: 0,
+    totalSlides: 3,
+    autoPlayInterval: null,
+    autoPlayDelay: 5000,
+
+    init() {
+        this.startAutoPlay();
+        // Pause on hover
+        const carousel = document.querySelector('.hero-carousel');
+        if (carousel) {
+            carousel.addEventListener('mouseenter', () => this.stopAutoPlay());
+            carousel.addEventListener('mouseleave', () => this.startAutoPlay());
+        }
+    },
+
+    goToSlide(index) {
+        const slides = document.querySelectorAll('.hero-slide');
+        const indicators = document.querySelectorAll('.hero-carousel-indicators .indicator');
+
+        // Remove active class from all
+        slides.forEach(slide => slide.classList.remove('active'));
+        indicators.forEach(indicator => indicator.classList.remove('active'));
+
+        // Add active class to target
+        this.currentSlide = index;
+        slides[index].classList.add('active');
+        indicators[index].classList.add('active');
+    },
+
+    next() {
+        const nextSlide = (this.currentSlide + 1) % this.totalSlides;
+        this.goToSlide(nextSlide);
+    },
+
+    prev() {
+        const prevSlide = (this.currentSlide - 1 + this.totalSlides) % this.totalSlides;
+        this.goToSlide(prevSlide);
+    },
+
+    startAutoPlay() {
+        this.stopAutoPlay();
+        this.autoPlayInterval = setInterval(() => this.next(), this.autoPlayDelay);
+    },
+
+    stopAutoPlay() {
+        if (this.autoPlayInterval) {
+            clearInterval(this.autoPlayInterval);
+            this.autoPlayInterval = null;
+        }
+    }
+};
+
+// ==========================================
+// CATEGORY TABS
+// ==========================================
+
+function switchCategoryTab(category) {
+    // Update tab buttons
+    const tabs = document.querySelectorAll('.category-tab');
+    tabs.forEach(tab => {
+        if (tab.dataset.category === category) {
+            tab.classList.add('active');
+        } else {
+            tab.classList.remove('active');
+        }
+    });
+
+    // Update tab content
+    const panes = document.querySelectorAll('.tab-pane');
+    panes.forEach(pane => {
+        if (pane.id === `tab-${category}`) {
+            pane.classList.add('active');
+        } else {
+            pane.classList.remove('active');
+        }
+    });
+}
+
+// ==========================================
 // HEADER & NAVIGATION
 // ==========================================
 
@@ -401,6 +484,11 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Initialize cart badge
     Cart.updateCartBadge();
+
+    // Initialize hero carousel
+    if (document.querySelector('.hero-carousel')) {
+        heroCarousel.init();
+    }
 });
 
 // ==========================================
