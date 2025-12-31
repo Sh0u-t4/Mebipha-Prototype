@@ -47,7 +47,7 @@
 }
 
 .logo-img {
-    height: 56px;
+    height: 40px;
     width: auto;
 }
 
@@ -860,6 +860,7 @@
         text-align: center;
     }
 }
+
 /* ==========================================
    CATEGORY TABS SECTION
    ========================================== */

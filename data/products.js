@@ -223,8 +223,8 @@ const PRODUCTS = [
         animalType: 'thuy-san-tom',
         purpose: ['men-tieu-hoa'],
         price: 175000,
-        image: 'images/products/lactozyme.jpg',
-        images: ['images/products/lactozyme.jpg'],
+        image: 'images/products/lactozyme.png',
+        images: ['images/products/lactozyme.png'],
         rating: 4.9,
         reviews: 734,
         packaging: ['500g', '1kg', '5kg'],
@@ -244,8 +244,8 @@ const PRODUCTS = [
         animalType: 'thuy-san-tom',
         purpose: ['men-tieu-hoa', 'dieu-tri'],
         price: 195000,
-        image: 'images/products/intes-one.jpg',
-        images: ['images/products/intes-one.jpg'],
+        image: 'images/products/intes-one.png',
+        images: ['images/products/intes-one.png'],
         rating: 4.8,
         reviews: 456,
         packaging: ['500g', '1kg'],
@@ -267,8 +267,8 @@ const PRODUCTS = [
         animalType: 'thuy-san-tom',
         purpose: ['sat-trung'],
         price: 85000,
-        image: 'images/products/bkc.jpg',
-        images: ['images/products/bkc.jpg'],
+        image: 'images/products/bkc.png',
+        images: ['images/products/bkc.png'],
         rating: 4.5,
         reviews: 892,
         packaging: ['1L', '5L', '20L'],
@@ -288,8 +288,8 @@ const PRODUCTS = [
         animalType: 'thuy-san-tom',
         purpose: ['sat-trung'],
         price: 125000,
-        image: 'images/products/iodine.jpg',
-        images: ['images/products/iodine.jpg'],
+        image: 'images/products/iodine.png',
+        images: ['images/products/iodine.png'],
         rating: 4.6,
         reviews: 456,
         packaging: ['1L', '5L'],
@@ -311,8 +311,8 @@ const PRODUCTS = [
         animalType: 'thuy-san-ca',
         purpose: ['dinh-duong', 'vitamin-khoang'],
         price: 155000,
-        image: 'images/products/fish-vitamin.jpg',
-        images: ['images/products/fish-vitamin.jpg'],
+        image: 'images/products/fish-vitamin.png',
+        images: ['images/products/fish-vitamin.png'],
         rating: 4.7,
         reviews: 289,
         packaging: ['500g', '1kg', '5kg'],
@@ -332,8 +332,8 @@ const PRODUCTS = [
         animalType: 'thuy-san-ca',
         purpose: ['tri-ky-sinh-trung'],
         price: 145000,
-        image: 'images/products/prazi-fish.jpg',
-        images: ['images/products/prazi-fish.jpg'],
+        image: 'images/products/prazi-fish.png',
+        images: ['images/products/prazi-fish.png'],
         rating: 4.8,
         reviews: 567,
         packaging: ['100g', '500g', '1kg'],
@@ -355,8 +355,8 @@ const PRODUCTS = [
         animalType: 'gia-suc-gia-cam',
         purpose: ['sat-trung'],
         price: 95000,
-        image: 'images/products/biosept.jpg',
-        images: ['images/products/biosept.jpg'],
+        image: 'images/products/biosept.png',
+        images: ['images/products/biosept.png'],
         rating: 4.6,
         reviews: 678,
         packaging: ['1L', '5L', '20L'],
@@ -376,8 +376,8 @@ const PRODUCTS = [
         animalType: 'gia-suc-gia-cam',
         purpose: ['sat-trung', 'khu-mui'],
         price: 75000,
-        image: 'images/products/formasan.jpg',
-        images: ['images/products/formasan.jpg'],
+        image: 'images/products/formasan.png',
+        images: ['images/products/formasan.png'],
         rating: 4.4,
         reviews: 345,
         packaging: ['1L', '5L'],
@@ -420,10 +420,10 @@ function filterProducts(filters = {}) {
     }
 
     // Filter by price range
-    if (filters.minPrice !== undefined) {
+    if (filters.minPrice !== undefined && filters.minPrice !== null) {
         results = results.filter(p => p.price >= filters.minPrice);
     }
-    if (filters.maxPrice !== undefined) {
+    if (filters.maxPrice !== undefined && filters.maxPrice !== null) {
         results = results.filter(p => p.price <= filters.maxPrice);
     }
 

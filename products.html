@@ -21,8 +21,7 @@
                     <!-- Logo -->
                     <div class="header-logo">
                         <a href="index.html" class="logo-link">
-                            <img src="images/logo.png" alt="Mebipha Logo" class="logo-img"
-                                onerror="this.style.display='none'; this.nextElementSibling.style.display='block';">
+                            <img src="images/logo.png" alt="Mebipha Logo" class="logo-img">
                             <div class="logo-text-wrapper">
                                 <span class="logo-brand">MEBIPHA</span>
                                 <span class="logo-slogan">GIẢI PHÁP CHĂN NUÔI 4.0</span>
@@ -196,17 +195,14 @@
                     <!-- Price Filter -->
                     <div class="mb-6">
                         <h4 class="font-medium mb-3">Khoảng giá</h4>
-                        <div class="d-flex gap-2 mb-3">
+                        <div class="d-flex gap-2 mb-4">
                             <input type="number" class="form-input" placeholder="Từ" id="minPrice"
                                 onchange="applyFilters()">
                             <input type="number" class="form-input" placeholder="Đến" id="maxPrice"
                                 onchange="applyFilters()">
                         </div>
-                        <div class="d-flex flex-column gap-2">
-                            <label class="form-check">
-                                <input type="radio" name="priceRange" value="" checked onchange="applyPriceRange(this)">
-                                <span class="form-check-label">Tất cả</span>
-                            </label>
+                        <div class="d-flex flex-column gap-3">
+
                             <label class="form-check">
                                 <input type="radio" name="priceRange" value="0-100000" onchange="applyPriceRange(this)">
                                 <span class="form-check-label">Dưới 100k</span>
@@ -286,6 +282,10 @@
             sortBy: ''
         };
 
+        // Pagination state
+        let currentPage = 1;
+        let itemsPerPage = 9;
+
         function applyFilters() {
             const categoryRadio = document.querySelector('input[name="category"]:checked');
             currentFilters.category = categoryRadio ? categoryRadio.value : '';
@@ -298,17 +298,31 @@
             currentFilters.minPrice = minPrice ? parseInt(minPrice) : null;
             currentFilters.maxPrice = maxPrice ? parseInt(maxPrice) : null;
 
+            currentPage = 1; // Reset to first page when filters change
             renderProducts();
         }
 
         function applyPriceRange(radio) {
-            if (radio.value) {
-                const [min, max] = radio.value.split('-').map(Number);
-                document.getElementById('minPrice').value = min;
-                document.getElementById('maxPrice').value = max;
-            } else {
+            // Toggle behavior: if clicking the same radio again, uncheck it
+            if (radio.dataset.wasChecked === 'true') {
+                radio.checked = false;
+                radio.dataset.wasChecked = 'false';
+                // Clear price filter
                 document.getElementById('minPrice').value = '';
                 document.getElementById('maxPrice').value = '';
+            } else {
+                // Uncheck all other radios and mark this one as checked
+                document.querySelectorAll('input[name="priceRange"]').forEach(r => {
+                    r.dataset.wasChecked = 'false';
+                });
+                radio.dataset.wasChecked = 'true';
+
+                // Apply the price range
+                if (radio.value) {
+                    const [min, max] = radio.value.split('-').map(Number);
+                    document.getElementById('minPrice').value = min;
+                    document.getElementById('maxPrice').value = max;
+                }
             }
             applyFilters();
         }
@@ -321,7 +335,12 @@
         function clearFilters() {
             document.querySelector('input[name="category"][value=""]').checked = true;
             document.querySelectorAll('input[type="checkbox"]').forEach(cb => cb.checked = false);
-            document.querySelectorAll('input[name="priceRange"]')[0].checked = true;
+            // Uncheck all price range radios and reset toggle state
+            document.querySelectorAll('input[name="priceRange"]').forEach(radio => {
+                radio.checked = false;
+                radio.dataset.wasChecked = 'false';
+            });
+            // Clear price inputs
             document.getElementById('minPrice').value = '';
             document.getElementById('maxPrice').value = '';
             currentFilters = {
@@ -336,39 +355,48 @@
         }
 
         function renderProducts() {
-            const products = filterProducts(currentFilters);
+            const allProducts = filterProducts(currentFilters);
             const productGrid = document.getElementById('productGrid');
             const productCount = document.getElementById('productCount');
 
-            productCount.textContent = `Tìm thấy ${products.length} sản phẩm`;
+            productCount.textContent = `Tìm thấy ${allProducts.length} sản phẩm`;
 
-            if (products.length === 0) {
+            if (allProducts.length === 0) {
                 productGrid.innerHTML = `
           <div class="text-center p-8" style="grid-column: 1 / -1;">
             <p class="text-lg text-gray-600 mb-4">Không tìm thấy sản phẩm nào</p>
             <button class="btn btn-primary" onclick="clearFilters()">Xóa bộ lọc</button>
           </div>
         `;
+                document.getElementById('pagination').style.display = 'none';
                 return;
             }
+
+            // Calculate pagination
+            const startIndex = (currentPage - 1) * itemsPerPage;
+            const endIndex = startIndex + itemsPerPage;
+            const products = allProducts.slice(startIndex, endIndex);
 
             productGrid.innerHTML = products.map(product => `
         <div class="product-card">
           <div class="product-card-img-wrapper">
-            <img class="product-card-img" src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='400' height='400'%3E%3Crect fill='%2386EFAC' width='400' height='400'/%3E%3Ctext x='50%25' y='50%25' dominant-baseline='middle' text-anchor='middle' fill='white' font-size='16' font-family='Arial'%3E${encodeURIComponent(product.name.substring(0, 30))}%3C/text%3E%3C/svg%3E" alt="${product.name}">
+            <img class="product-card-img" src="${product.image}" alt="${product.name}" onerror="this.src='data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 width=%22400%22 height=%22400%22%3E%3Crect fill=%22%2386EFAC%22 width=%22400%22 height=%22400%22/%3E%3Ctext x=%2250%25%22 y=%2250%25%22 dominant-baseline=%22middle%22 text-anchor=%22middle%22 fill=%22white%22 font-size=%2224%22%3E${product.name.substring(0, 20)}%3C/text%3E%3C/svg%3E'">
           </div>
           <div class="product-card-badge badge badge-${product.animalType.includes('thuy-san') ? 'secondary' : 'primary'}">
             ${product.animalType === 'thuy-san-tom' ? 'Tôm' : product.animalType === 'thuy-san-ca' ? 'Cá' : 'Gia súc/Giacầm'}
           </div>
-          <button class="product-card-wishlist" onclick="toggleWishlist('${product.id}', event)">
-            ${Wishlist.has(product.id) ? '❤️' : '🤍'}
-          </button>
+
           <div class="product-card-body">
             <div class="product-card-brand">${product.brand}</div>
             <h3 class="product-card-title">${product.name}</h3>
             <div class="product-card-rating">
               <span class="product-card-stars">⭐ ${product.rating}</span>
               <span class="text-gray-500">(${product.reviews})</span>
+              <button class="product-card-wishlist" onclick="toggleWishlist('${product.id}', event)">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="${Wishlist.has(product.id) ? 'currentColor' : 'none'}" stroke="currentColor" stroke-width="2">
+                  <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/>
+                </svg>
+              </button>
             </div>
             <div class="product-card-price">
               ${formatPrice(product.price)}
@@ -383,6 +411,103 @@
           </div>
         </div>
       `).join('');
+
+            // Render pagination
+            renderPagination(allProducts.length);
+        }
+
+        // Pagination functions
+        function renderPagination(totalProducts) {
+            const pagination = document.getElementById('pagination');
+            const totalPages = Math.ceil(totalProducts / itemsPerPage);
+
+            if (totalPages <= 1) {
+                pagination.style.display = 'none';
+                return;
+            }
+
+            pagination.style.display = 'flex';
+
+            let paginationHTML = '';
+
+            // Previous button
+            paginationHTML += `
+                <button class="pagination-btn" onclick="goToPage(${currentPage - 1})" ${currentPage === 1 ? 'disabled' : ''}>
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <polyline points="15 18 9 12 15 6"></polyline>
+                    </svg>
+                </button>
+            `;
+
+            // Page numbers container
+            paginationHTML += '<div class="pagination-numbers">';
+
+            // Generate page numbers with ellipsis
+            const maxVisiblePages = 5;
+            let startPage = Math.max(1, currentPage - 2);
+            let endPage = Math.min(totalPages, currentPage + 2);
+
+            // Always show first page
+            if (startPage > 1) {
+                paginationHTML += `<button class="pagination-number ${currentPage === 1 ? 'active' : ''}" onclick="goToPage(1)">1</button>`;
+                if (startPage > 2) {
+                    paginationHTML += '<span class="pagination-ellipsis">...</span>';
+                }
+            }
+
+            // Show page numbers
+            for (let i = startPage; i <= endPage; i++) {
+                paginationHTML += `<button class="pagination-number ${currentPage === i ? 'active' : ''}" onclick="goToPage(${i})">${i}</button>`;
+            }
+
+            // Always show last page
+            if (endPage < totalPages) {
+                if (endPage < totalPages - 1) {
+                    paginationHTML += '<span class="pagination-ellipsis">...</span>';
+                }
+                paginationHTML += `<button class="pagination-number ${currentPage === totalPages ? 'active' : ''}" onclick="goToPage(${totalPages})">${totalPages}</button>`;
+            }
+
+            paginationHTML += '</div>';
+
+            // Next button
+            paginationHTML += `
+                <button class="pagination-btn" onclick="goToPage(${currentPage + 1})" ${currentPage === totalPages ? 'disabled' : ''}>
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <polyline points="9 18 15 12 9 6"></polyline>
+                    </svg>
+                </button>
+            `;
+
+            // Items per page selector
+            paginationHTML += `
+                <select class="pagination-select" onchange="changeItemsPerPage(this.value)">
+                    <option value="9" ${itemsPerPage === 9 ? 'selected' : ''}>9 / page</option>
+                    <option value="18" ${itemsPerPage === 18 ? 'selected' : ''}>18 / page</option>
+                    <option value="27" ${itemsPerPage === 27 ? 'selected' : ''}>27 / page</option>
+                </select>
+            `;
+
+            pagination.innerHTML = paginationHTML;
+        }
+
+        function goToPage(pageNumber) {
+            const allProducts = filterProducts(currentFilters);
+            const totalPages = Math.ceil(allProducts.length / itemsPerPage);
+
+            if (pageNumber < 1 || pageNumber > totalPages) return;
+
+            currentPage = pageNumber;
+            renderProducts();
+
+            // Scroll to top of product grid
+            document.getElementById('productGrid').scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }
+
+        function changeItemsPerPage(value) {
+            itemsPerPage = parseInt(value);
+            currentPage = 1; // Reset to first page
+            renderProducts();
         }
 
         // Initialize on load

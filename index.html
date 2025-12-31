@@ -26,8 +26,7 @@
                     <!-- Logo -->
                     <div class="header-logo">
                         <a href="index.html" class="logo-link">
-                            <img src="images/logo.png" alt="Mebipha Logo" class="logo-img"
-                                onerror="this.style.display='none'; this.nextElementSibling.style.display='block';">
+                            <img src="images/logo.png" alt="Mebipha Logo" class="logo-img">
                             <div class="logo-text-wrapper">
                                 <span class="logo-brand">MEBIPHA</span>
                                 <span class="logo-slogan">GIẢI PHÁP CHĂN NUÔI 4.0</span>
@@ -614,17 +613,18 @@
           <div class="product-card-badge badge badge-${product.animalType === 'gia-suc-gia-cam' || product.animalType === 'gia-cam' || product.animalType === 'gia-suc' ? 'primary' : 'secondary'}">
             ${product.animalType === 'thuy-san-tom' ? 'Tôm' : product.animalType === 'thuy-san-ca' ? 'Cá' : 'Gia súc/Gia cầm'}
           </div>
-          <button class="product-card-wishlist" onclick="toggleWishlist('${product.id}', event)">
-            <svg width="20" height="20" viewBox="0 0 24 24" fill="${Wishlist.has(product.id) ? 'currentColor' : 'none'}" stroke="currentColor" stroke-width="2">
-              <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/>
-            </svg>
-          </button>
+
           <div class="product-card-body">
             <div class="product-card-brand">${product.brand}</div>
             <h3 class="product-card-title">${product.name}</h3>
             <div class="product-card-rating">
               <span class="product-card-stars">⭐ ${product.rating}</span>
               <span class="text-gray-500">(${product.reviews})</span>
+              <button class="product-card-wishlist" onclick="toggleWishlist('${product.id}', event)">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="${Wishlist.has(product.id) ? 'currentColor' : 'none'}" stroke="currentColor" stroke-width="2">
+                  <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/>
+                </svg>
+              </button>
             </div>
             <div class="product-card-price">
               ${formatPrice(product.price)}
