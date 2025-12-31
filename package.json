@@ -4,6 +4,8 @@
   "description": "Trang web thương mại điện tử chuyên về thuốc thú y, thủy sản và sản phẩm chăn nuôi.",
   "main": "main.js",
   "scripts": {
+    "dev": "node server.js",
+    "start": "node server.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [],
